@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower Defense</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            /*background: linear-gradient(to bottom, black, #454545);*/
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            /*position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);*/
+        }
+
+        .neon-text {
+            font-family: 'Arial', sans-serif; /* Choisissez une police simple et lisible */
+            font-size: 24px; /* Taille du texte */
+            color: #fff; /* Couleur du texte */
+            /*text-align: center;*/ /* Centrage du texte */
+            /*background-color: #000;*/ /* Couleur de fond pour bien voir l'effet néon */
+            padding: 20px; /* Espacement autour du texte */
+
+            /* Effet néon avec plusieurs couches d'ombres */
+            text-shadow: 
+                0 0 5px #00ffff, /* Couleur principale de l'effet néon */
+                0 0 10px #00ffff, 
+                0 0 20px #00ffff, 
+                0 0 40px #00ffff, 
+                0 0 80px #00ffff,
+                0 0 90px #00ffff,
+                0 0 100px #00ffff;
+        }
+
+        .menu {
+            /*display: none;*/ /* Cacher la modale par défaut */
+            position: fixed; /* Fixé en haut de la page */
+            z-index: 1000; /* Au-dessus du contenu */
+            left: 2%;
+            top: 2%;
+            width: 25%; /* Largeur complète de l'écran */
+            height: 75%; /* Hauteur complète de l'écran */
+            border-radius: 10px;
+            overflow: auto; /* Activer le défilement si nécessaire */
+            background-color: rgba(64, 64, 64, 0.742)/* Fond semi-transparent */
+        }
+
+        /* Contenu de la modale */
+        .modal-content {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            color: #a5a5a5;
+            margin-top: 20%;
+            padding: 5%;
+        }
+
+        .message {
+            display: none; /* Cacher la modale par défaut */
+            position: fixed; /* Fixé en haut de la page */
+            z-index: 1500; /* Au-dessus du contenu */
+            left: 30%;
+            top: 2%;
+            width: 40%; /* Largeur complète de l'écran */
+            height: 25%; /* Hauteur complète de l'écran */
+            border-radius: 10px;
+            /*overflow: auto;*/ /* Activer le défilement si nécessaire */
+            background-color: rgba(64, 64, 64, 0.4)/* Fond semi-transparent */
+        }
+
+        .game_over {
+            display: none; /* Cacher la modale par défaut */
+            position: fixed; /* Fixé en haut de la page */
+            z-index: 1500; /* Au-dessus du contenu */
+            left: 30%;
+            top: 2%;
+            width: 40%; /* Largeur complète de l'écran */
+            height: 25%; /* Hauteur complète de l'écran */
+            border-radius: 10px;
+            /*overflow: auto;*/ /* Activer le défilement si nécessaire */
+            background-color: rgba(64, 64, 64, 0.4)/* Fond semi-transparent */
+        }
+
+        button {
+            background-color: transparent; /* Assurez-vous que le fond du bouton est transparent */
+            border: none; /* Si vous voulez supprimer une bordure */
+            color: #a5a5a5;
+        }
+
+        button:hover
+        {
+            cursor: pointer;
+        }
+
+        img {
+            background-color: transparent; /* Assurez-vous que l'image n'a pas de fond */
+        }
+    </style>
+</head>
+<body>
+    <!--<h1 class="neon-text" style="text-align: center; font-size: 48px;">TOWER DEFENSE</h1>
+    <h1 id="level" class="neon-text">Difficulté 1</h1>
+    <h1 id="money" class="neon-text">200</h1>-->
+    <canvas id="gameCanvas"></canvas>
+    <div class="menu">
+        <div class="modal-content">
+            <div style="font-size: 30px; margin-bottom: 10%;">Tower Defense for Bones</div>
+            <hr style="margin-bottom: 10%;">
+            <div id="level">Level : 1</div>
+            <div id="cash">Cash : 200</div>
+            <div id="life">Life : 100 %</div>
+            <hr style="margin-bottom: 10%; margin-top: 10%;">
+            <div style="display: flex;">
+                <button id="selectCanon">
+                    <img src="img/Canon.png" alt="Canon" style="width: 25%;">
+                </button>
+                <button id="selectBazooka">
+                    <img src="img/Bazooka.png" alt="Bazooka" style="width: 25%;">
+                </button>
+            </div>
+            <div id="typeGun" style="margin-top: 10%;"></div>
+        </div>
+    </div>
+    <div class="message">
+        <div class="modal-content" style="margin-top: 0;" id="message"></div>
+    </div>
+    <div class="game_over">
+        <div class="modal-content" style="margin-top: 0;">
+            GAME OVER
+            <br>
+            <button id="restart" style="color: #a5a5a5">RESTART</button>
+        </div>
+    </div>
+    <script src="game.js" type="module"></script>
+</body>
+</html>
