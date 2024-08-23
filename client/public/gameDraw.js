@@ -216,7 +216,6 @@ export const drawGuns = (ctx) =>
 
         if(gun.target != -1 && ennemies[gun.target])
         {
-            //vec = normalize({ x: ennemies[gun.target].x - gun.x, y: ennemies[gun.target].y - gun.y });
             vec = normalize({ x: ennemies[gun.target].x - gun.xAmmo, y: ennemies[gun.target].y - gun.yAmmo });
 
             gun.angle = Math.acos(dot({ x: 1, y: 0}, vec));

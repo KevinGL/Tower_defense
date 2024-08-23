@@ -51,8 +51,11 @@ export const attacks = (tower, ennemies) =>
             ennemies.map((e, j) =>
             {
                 const dist = Math.sqrt(Math.pow(gun.x - e.x, 2) + Math.pow(gun.y - e.y, 2));
+
+                const posEnnemy = convertColRow(e.x, e.y);
+                const posGun = convertColRow(gun.x, gun.y);
                 
-                if(dist < distMin && Math.abs(e.x - xTower) > sizeTower / 2 && Math.abs(e.y - yTower) > sizeTower / 2)// && dist <= distMinGun)
+                if(dist < distMin && Math.abs(e.x - xTower) > sizeTower / 2 && Math.abs(e.y - yTower) > sizeTower / 2 && posEnnemy.col != posGun.col && posEnnemy.row != posGun.row)// && dist <= distMinGun)
                 {
                     distMin = dist;
                     gun.target = j;
@@ -127,6 +130,8 @@ export const attacks = (tower, ennemies) =>
                 gun.yAmmo = gun.y;
             }
         }
+
+        console.log(gun.target);
         
         //console.log(`Gun ${i} ammo ${gun.xAmmo, gun.yAmmo}`);
     });
@@ -169,7 +174,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
         }
     });
 
-    ennemies.map((ennemy) =>
+    /*ennemies.map((ennemy) =>
     {
         const posEnnemy = convertColRow(ennemy.x, ennemy.y);
 
@@ -178,7 +183,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
             forbidden = true;
             message = "You can't place gun on enemy !";
         }
-    });
+    });*/
 
     if(Math.abs(tower.x - xCase) <= sizeTower + 10 && Math.abs(tower.y - yCase) <= sizeTower + 10)
     {
