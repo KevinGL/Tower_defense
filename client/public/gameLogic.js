@@ -131,7 +131,7 @@ export const attacks = (tower, ennemies) =>
             }
         }
 
-        console.log(gun.target);
+        //console.log(gun.target);
         
         //console.log(`Gun ${i} ammo ${gun.xAmmo, gun.yAmmo}`);
     });
