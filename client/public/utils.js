@@ -1,4 +1,4 @@
-import { sizeObstacles, sizeTower, ennemySpeed, grill, InitGrill, width, height } from "./game.js";
+import { sizeObstacles, sizeTower, ennemySpeed, grill, InitGrill, width, height, ennemies, tower, ennemyTowers } from "./game.js";
 
 export function drawRoundedRect(ctx, x, y, width, height, radius, fillColor) {
     ctx.beginPath();
@@ -61,42 +61,31 @@ export const Init = (obstacles, tower, ennemyTowers, ennemies, grill) =>
 
         row++;
     }
-    
-    InitGrill();
 
     //console.log(grill);
 
-    const start1 = convertColRow(ennemyTowers[0].x + sizeTower / 2, ennemyTowers[0].y + sizeTower / 2);
-    /*{
-        col: parseInt(((ennemyTowers[0].x + 1.1 * sizeTower / 2) / width) * grill[0].length) - 1,
-        row: parseInt(((ennemyTowers[0].y + 1.1 * sizeTower / 2) / height) * grill.length)
-    };*/
+    /*const start1 = convertColRow(ennemyTowers[0].x + sizeTower / 2, ennemyTowers[0].y + sizeTower / 2);
     const start2 = convertColRow(ennemyTowers[1].x + sizeTower / 2, ennemyTowers[1].y + sizeTower / 2);
-    /*{
-        col: parseInt(((ennemyTowers[1].x + 1.1 * sizeTower / 2) / width) * grill[0].length),
-        row: parseInt(((ennemyTowers[1].y + 1.1 * sizeTower / 2) / height) * grill.length)
-    };*/
-
     const goal = convertColRow(tower.x + sizeTower / 2, tower.y + sizeTower / 2);
-    /*{
-        col: parseInt((tower.x / width) * grill[0].length),
-        row: parseInt((tower.y / height) * grill.length)
-    };*/
-
-    //console.log(start1, goal);
+    
     const path1 = a_star(grill, start1, goal);
-    const path2 = a_star(grill, start2, goal);
+    const path2 = a_star(grill, start2, goal);*/
 
     const nbEnnemies = 100;
     let offset = 0;
 
     for (let i = 0 ; i < nbEnnemies ; i += 2)
     {
-        ennemies.push({ x: ennemyTowers[0].x + sizeTower / 2, y: ennemyTowers[0].y + sizeTower / 2, offset, path: path1, pathNode: 0, hp: 10, damage: 4 });
-        ennemies.push({ x: ennemyTowers[1].x + sizeTower / 2, y: ennemyTowers[1].y + sizeTower / 2, offset, path: path2, pathNode: 0, hp: 10, damage: 4 });
+        /*ennemies.push({ x: ennemyTowers[0].x + sizeTower / 2, y: ennemyTowers[0].y + sizeTower / 2, offset, path: path1, pathNode: 0, hp: 10, damage: 4 });
+        ennemies.push({ x: ennemyTowers[1].x + sizeTower / 2, y: ennemyTowers[1].y + sizeTower / 2, offset, path: path2, pathNode: 0, hp: 10, damage: 4 });*/
+
+        ennemies.push({ x: ennemyTowers[0].x + sizeTower / 2, y: ennemyTowers[0].y + sizeTower / 2, offset, path: [], pathNode: 0, hp: 10, damage: 4 });
+        ennemies.push({ x: ennemyTowers[1].x + sizeTower / 2, y: ennemyTowers[1].y + sizeTower / 2, offset, path: [], pathNode: 0, hp: 10, damage: 4 });
 
         offset += 300;
     }
+
+    //createPaths(ennemies);
 
     /////////////////////////////////////////////////////////////
 
@@ -109,15 +98,15 @@ export const Init = (obstacles, tower, ennemyTowers, ennemies, grill) =>
         
         for(let x = 0 ; x < width ; x += 1.1 * sizeObstacles)
         {
-            if(Math.random() < 0.2)
+            if(Math.random() < 0.1)
             {
                 const posObstacle = { col, row };
 
                 /*console.log(posObstacle, path1.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}));
                 console.log(posObstacle, path2.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}));*/
 
-                if(path1.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}).length == 0 &&
-                   path2.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}).length == 0)
+                /*if(path1.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}).length == 0 &&
+                   path2.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}).length == 0)*/
                 {
                     obstacles.push({ x, y });
                 }
@@ -136,6 +125,8 @@ export const Init = (obstacles, tower, ennemyTowers, ennemies, grill) =>
 
         row++;
     }
+
+    InitGrill();
 }
 
 export const collide = (obstacles, pos) =>
@@ -324,4 +315,193 @@ export const dot = (vec1, vec2) =>
 export const convertColRow = (x, y) =>
 {
     return { col: Math.floor((x / (1.1 * sizeTower))), row: Math.floor((y / (1.1 * sizeTower))) };
+}
+
+export const createPaths = (ennemies) =>
+{
+    /*const posTower = convertColRow(tower.x, tower.y);
+    
+    for(let i = 0 ; i < ennemies.length ; i++)
+    {
+        ennemies[i].path.length = 0;
+        let j = 0;
+        let pos = null;
+
+        if(i % 2 == 0)
+        {
+            pos = convertColRow(ennemyTowers[0].x, ennemyTowers[0].y);
+        }
+
+        else
+        {
+            pos = convertColRow(ennemyTowers[1].x, ennemyTowers[1].y);
+            pos.col--;
+        }
+        
+        while(true)
+        {
+            j++;
+
+            if(pos.col == posTower.col && pos.row == posTower.row)
+            //if(j == 100)
+            {
+                break;
+            }
+            
+            if(pos.col != posTower.col)
+            {
+                if(pos.col > posTower.col)
+                {
+                    pos.col--;
+                }
+    
+                else
+                if(pos.col < posTower.col)
+                {
+                    pos.col++;
+                }
+            }
+    
+            else
+            {
+                if(pos.row < posTower.row)
+                {
+                    pos.row++;
+                }
+    
+                else
+                if(pos.row > posTower.row)
+                {
+                    pos.row--;
+                }
+            }
+
+            ennemies[i].path.push({ ...pos });
+        }
+    }*/
+
+    const start1 = convertColRow(ennemyTowers[0].x, ennemyTowers[0].y);
+    const end = convertColRow(tower.x, tower.y);
+
+    let path1 = [{ ...start1 }];
+
+    let current = { ...start1 };
+
+    let visited = new Set();
+    visited.add(`${current.col},${current.row}`);
+    
+    let j = 0;
+
+    while(true)
+    {
+        const neighbors =
+        [
+            { col: current.col + 1, row: current.row },
+            { col: current.col - 1, row: current.row },
+            { col: current.col, row: current.row + 1 },
+            { col: current.col, row: current.row - 1 }
+        ];
+
+        let costs = [];
+
+        neighbors.forEach((n, i) =>
+        {
+            // Vérifier si le voisin est dans la grille et n'est pas un obstacle
+            if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
+            {
+                if (!visited.has(`${n.col},${n.row}`))
+                {
+                    const g = path1.length; // Simplement la longueur du chemin parcouru pour représenter g
+                    const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
+                    const f = g + h;
+                    costs.push({ cost: f, neighbor: n });
+                }
+            }
+        });
+
+        if (costs.length === 0)
+        {
+            // Si aucun voisin valide, casse la boucle
+            break;
+        }
+
+        let nextStep = costs.reduce((acc, curr) => (curr.cost < acc.cost ? curr : acc));
+
+        current = nextStep.neighbor;
+        visited.add(`${current.col},${current.row}`);
+        path1.push(current);
+
+        j++;
+
+        //if(j == 10)
+        if(current.col == end.col && current.row == end.row)
+        {
+            break;
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////
+
+    visited.clear();
+
+    const start2 = convertColRow(ennemyTowers[1].x, ennemyTowers[1].y);
+
+    current = { ...start2 };
+    let path2 = [{ ...start2 }];
+
+    while(true)
+    {
+        const neighbors =
+        [
+            { col: current.col + 1, row: current.row },
+            { col: current.col - 1, row: current.row },
+            { col: current.col, row: current.row + 1 },
+            { col: current.col, row: current.row - 1 }
+        ];
+
+        let costs = [];
+
+        neighbors.forEach((n, i) =>
+        {
+            // Vérifier si le voisin est dans la grille et n'est pas un obstacle
+            if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
+            {
+                if (!visited.has(`${n.col},${n.row}`))
+                {
+                    const g = path1.length; // Simplement la longueur du chemin parcouru pour représenter g
+                    const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
+                    const f = g + h;
+                    costs.push({ cost: f, neighbor: n });
+                }
+            }
+        });
+
+        if (costs.length === 0)
+        {
+            // Si aucun voisin valide, casse la boucle
+            break;
+        }
+
+        let nextStep = costs.reduce((acc, curr) => (curr.cost < acc.cost ? curr : acc));
+
+        current = nextStep.neighbor;
+        visited.add(`${current.col},${current.row}`);
+        path2.push(current);
+
+        j++;
+
+        //if(j == 10)
+        if(current.col == end.col && current.row == end.row)
+        {
+            break;
+        }
+    }
+
+    //console.log(path1);
+
+    for(let i = 0 ; i < ennemies.length ; i += 2)
+    {
+        ennemies[i + 0].path = path1;
+        ennemies[i + 1].path = path2;
+    }
 }

@@ -46,7 +46,7 @@ export const drawTower = (ctx) =>
     ctx.arc(tower.x, tower.y, 5, 0, Math.PI * 2, true);
     ctx.fillStyle = "#00ff00";
     ctx.fill();*/
-
+    
     drawRoundedRect(ctx, tower.x, tower.y, sizeTower, sizeTower, 5, "#27ae60");
 }
 
@@ -153,7 +153,7 @@ export const drawEnnemies = (ctx) =>
         InitGrill();
         reinitAttacks();
 
-        clearGuns();
+        //clearGuns();
         relifeTower();
 
         updateLevel();

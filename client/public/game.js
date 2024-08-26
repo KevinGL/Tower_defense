@@ -1,5 +1,5 @@
 import { drawBackground, drawObstacles, drawTower, drawEnnemies, drawMessages, drawGuns } from "./gameDraw.js";
-import { Init, convertColRow, a_star } from "./utils.js";
+import { Init, convertColRow, a_star, createPaths } from "./utils.js";
 import { attacks, tsModal } from "./gameLogic.js";
 
 const canvas = document.getElementById("gameCanvas");
@@ -14,7 +14,7 @@ canvas.height = height;
 const aspectRatio = canvas.width / canvas.height;
 
 export const textureFire = new Image();
-textureFire.src = "client/public/img/Fire.png";
+textureFire.src = "img/Fire.png";
 
 export const sizeObstacles = 35;
 export const sizeTower = sizeObstacles;
@@ -54,19 +54,6 @@ export const addGun = (value) =>
     const coord = convertColRow(value.x, value.y);
 
     grill[coord.row][coord.col] = 1;
-
-    const goal = convertColRow(tower.x, tower.y);
-    const start1 = convertColRow(ennemyTowers[0].x, ennemyTowers[0].y);
-    const start2 = convertColRow(ennemyTowers[1].x, ennemyTowers[1].y);
-
-    const path1 = a_star(grill, start1, goal);
-    const path2 = a_star(grill, start2, goal);
-
-    for (let i = 0 ; i < ennemies.length ; i += 2)
-    {
-        ennemies[i + 0].path = path1;
-        ennemies[i + 1].path = path2;
-    }
 }
 
 export const nbParts = 50;
@@ -169,6 +156,7 @@ function update()
         drawGuns(ctx);
         drawMessages(ctx);
 
+        createPaths(ennemies);
         attacks(tower, ennemies);
 
         setTimeout(() => {
