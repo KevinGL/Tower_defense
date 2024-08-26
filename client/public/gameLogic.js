@@ -57,7 +57,11 @@ export const attacks = (tower, ennemies) =>
                 const posEnnemy = convertColRow(e.x, e.y);
                 const posGun = convertColRow(gun.x, gun.y);
                 
-                if(dist < distMin && posGun.col != posTower.col && posEnnemy.row != posGun.row && posEnnemy.col != posGun.col && posEnnemy.row != posGun.row && e.hp > 0)// && dist <= distMinGun)
+                if(dist < distMin &&
+                    posEnnemy.col != posTower.col && posEnnemy.row != posTower.row &&
+                    posEnnemy.col != ennemyTowers[0].col && posEnnemy.row != ennemyTowers[0].row &&
+                    posEnnemy.col != ennemyTowers[1].col && posEnnemy.row != ennemyTowers[1].row &&
+                    posGun.col != posEnnemy.col && posGun.row != posEnnemy.row && e.hp > 0)
                 {
                     distMin = dist;
                     gun.target = j;
