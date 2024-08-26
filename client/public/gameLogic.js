@@ -39,6 +39,8 @@ export const attacks = (tower, ennemies) =>
 
     const xTower = tower.x + sizeTower / 2;
     const yTower = tower.y + sizeTower / 2;
+
+    const posTower = convertColRow(xTower, yTower);
     
     guns.map((gun, i) =>
     {
@@ -55,7 +57,7 @@ export const attacks = (tower, ennemies) =>
                 const posEnnemy = convertColRow(e.x, e.y);
                 const posGun = convertColRow(gun.x, gun.y);
                 
-                if(dist < distMin && Math.abs(e.x - xTower) > sizeTower / 2 && Math.abs(e.y - yTower) > sizeTower / 2 && posEnnemy.col != posGun.col && posEnnemy.row != posGun.row)// && dist <= distMinGun)
+                if(dist < distMin && posGun.col != posTower.col && posEnnemy.row != posGun.row && posEnnemy.col != posGun.col && posEnnemy.row != posGun.row && e.hp > 0)// && dist <= distMinGun)
                 {
                     distMin = dist;
                     gun.target = j;
