@@ -1,10 +1,14 @@
 import { drawRoundedRect, collide, normalize, getLength, dot, convertColRow } from "./utils.js";
-import { sizeObstacles, obstacles, tower, sizeTower, ennemyTowers, indexThick, ennemies, ts, ennemySpeed, guns, relifeTower, clearGuns, reinitEnnemies, InitGrill, reinitAttacks, width, height, level, updateLevel, nbParts, textureFire, setPause } from "./game.js";
+import { sizeObstacles, obstacles, tower, sizeTower, ennemyTowers, typeGun, ennemies, ts, ennemySpeed, guns, relifeTower, clearGuns, reinitEnnemies, InitGrill, reinitAttacks, width, height, level, updateLevel, nbParts, textureFire, setPause } from "./game.js";
 import { gapHp, resetTsModal } from "./gameLogic.js";
+import { gunProperties } from "./properties.js";
 
 export let indexEnnemyNearest = -1;
 
 const backgroundColor = '#1f2125';
+
+let xMouse = 0;
+let yMouse = 0;
 
 export const drawBackground = (ctx, width, height) =>
 {
@@ -203,7 +207,29 @@ export const drawMessages = (ctx) =>
         document.getElementsByClassName("game_over")[0].style.display = "block";
         //location.reload();
     }
+
+    //console.log(gunProperties[typeGun]);
+
+    if(typeGun != "")
+    {
+        ctx.fillStyle = gunProperties[typeGun].fillStyle;
+        ctx.globalAlpha = 0.5;
+
+        ctx.beginPath();
+        ctx.arc(xMouse, yMouse, gunProperties[typeGun].distMax, 0, 2 * Math.PI, false);
+        ctx.closePath();
+
+        ctx.fill();
+    }
 }
+
+document.addEventListener("mousemove", (e) =>
+{
+    xMouse = e.clientX;
+    yMouse = e.clientY;
+    //console.log(`Cursor coordinates relative to the viewport: X=${x}, Y=${y}`);
+});
+
 
 export const drawGuns = (ctx) =>
 {
@@ -226,7 +252,9 @@ export const drawGuns = (ctx) =>
             }
         }
 
-        let speed;
+        ctx.fillStyle = gunProperties[gun.typeGun].fillStyle;
+
+        /*let speed;
 
         if(gun.typeGun == "Canon")
         {
@@ -239,7 +267,7 @@ export const drawGuns = (ctx) =>
         {
             ctx.fillStyle = "#fca909";
             speed = 20;
-        }
+        }*/
 
         ctx.beginPath();
         ctx.arc(gun.x, gun.y, 10, 2 * Math.PI, false);
@@ -264,8 +292,8 @@ export const drawGuns = (ctx) =>
 
                 ctx.fill();
 
-                gun.xAmmo += speed * vec.x;
-                gun.yAmmo += speed * vec.y;
+                gun.xAmmo += gunProperties[gun.typeGun].speed * vec.x;
+                gun.yAmmo += gunProperties[gun.typeGun].speed * vec.y;
 
                 if(gun.xAmmo < 0 || gun.xAmmo > width || gun.yAmmo < 0 || gun.yAmmo > height)
                 {
@@ -292,8 +320,8 @@ export const drawGuns = (ctx) =>
 
                 if(Date.now() - gun.ts > 2000)
                 {
-                    gun.xAmmo += speed * vec.x;
-                    gun.yAmmo += speed * vec.y;
+                    gun.xAmmo += gunProperties[gun.typeGun].speed * vec.x;
+                    gun.yAmmo += gunProperties[gun.typeGun].speed * vec.y;
 
                     if(gun.xAmmo < 0 || gun.xAmmo > width || gun.yAmmo < 0 || gun.yAmmo > height)
                     {

@@ -1,5 +1,6 @@
 import { sizeTower, ennemyTowers, addGun, obstacles, tower, guns, ennemies, ennemiesAttacked, addAttack, typeGun, nbParts, cash, addCash } from "./game.js";
 import { convertColRow } from "./utils.js";
+import { gunProperties } from "./properties.js";
 
 export const gapHp = 0.2;
 const distMinGun = 800;
@@ -61,7 +62,8 @@ export const attacks = (tower, ennemies) =>
                     posEnnemy.col != posTower.col && posEnnemy.row != posTower.row &&
                     posEnnemy.col != ennemyTowers[0].col && posEnnemy.row != ennemyTowers[0].row &&
                     posEnnemy.col != ennemyTowers[1].col && posEnnemy.row != ennemyTowers[1].row &&
-                    posGun.col != posEnnemy.col && posGun.row != posEnnemy.row && e.hp > 0)
+                    posGun.col != posEnnemy.col && posGun.row != posEnnemy.row && e.hp > 0 &&
+                    dist < gun.distMax)
                 {
                     distMin = dist;
                     gun.target = j;
@@ -203,27 +205,39 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
         message = "Please choose a gun !";
     }
     
-    let price;
+    /*let price, distMax;
 
     if(typeGun == "Canon")
     {
         price = 50;
+        distMax = 60;
     }
 
     else
     if(typeGun == "Bazooka")
     {
         price = 150;
+        distMax = 100;
     }
 
-    if(cash - price < 0)
+    console.log(gunProperties[typeGun]);*/
+
+    else
     {
-        forbidden = true;
-        message = "You don't have enough money !";
+        const price = gunProperties[typeGun].price;
+
+        if(cash - price < 0)
+        {
+            forbidden = true;
+            message = "You don't have enough money !";
+        }
     }
     
     if(!forbidden)
     {
+        const price = gunProperties[typeGun].price;
+        const distMax = gunProperties[typeGun].distMax;
+        
         let parts = [];
         
         for(let i = 0 ; i < nbParts ; i++)
@@ -235,7 +249,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
             parts.push({ x: 0, y: 0, dir: vec, life: 1, speed });
         }
         
-        addGun({ x: xCase, y: yCase, xAmmo: xCase, yAmmo: yCase, target: -1, angle: 0, typeGun, ts: Date.now(), parts });
+        addGun({ x: xCase, y: yCase, xAmmo: xCase, yAmmo: yCase, target: -1, angle: 0, typeGun, ts: Date.now(), parts, distMax });
 
         addCash(-price);
     }

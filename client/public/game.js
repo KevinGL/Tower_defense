@@ -14,7 +14,7 @@ canvas.height = height;
 const aspectRatio = canvas.width / canvas.height;
 
 export const textureFire = new Image();
-textureFire.src = "client/public/img/Fire.png";
+textureFire.src = "img/Fire.png";
 
 export const sizeObstacles = 35;
 export const sizeTower = sizeObstacles;
@@ -194,28 +194,52 @@ document.addEventListener('visibilitychange', function()
 
 document.getElementById("selectCanon").addEventListener("click", () =>
 {
-    typeGun = "Canon";
+    if(typeGun == "")
+    {
+        typeGun = "Canon";
 
-    document.getElementById("selectCanon").style.border = "solid";
-    document.getElementById("selectCanon").style.borderWidth = "2px";
-    document.getElementById("selectCanon").style.borderColor = "white";
-    document.getElementById("selectCanon").style.borderRadius = "5px";
-    document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("selectCanon").style.border = "solid";
+        document.getElementById("selectCanon").style.borderWidth = "2px";
+        document.getElementById("selectCanon").style.borderColor = "white";
+        document.getElementById("selectCanon").style.borderRadius = "5px";
 
-    document.getElementById("typeGun").innerText = "You have choosen the canon (Price : 50)";
+        document.getElementById("selectBazooka").style.border = "none";
+
+        document.getElementById("typeGun").innerText = "You have choosen the canon (Price : 50)";
+    }
+
+    else
+    {
+        typeGun = "";
+
+        document.getElementById("selectCanon").style.border = "none";
+        document.getElementById("typeGun").innerText = "";
+    }
 });
 
 document.getElementById("selectBazooka").addEventListener("click", () =>
 {
-    typeGun = "Bazooka";
+    if(typeGun == "")
+    {
+        typeGun = "Bazooka";
 
-    document.getElementById("selectBazooka").style.border = "solid";
-    document.getElementById("selectBazooka").style.borderWidth = "2px";
-    document.getElementById("selectBazooka").style.borderColor = "white";
-    document.getElementById("selectBazooka").style.borderRadius = "5px";
-    document.getElementById("selectCanon").style.border = "none";
+        document.getElementById("selectBazooka").style.border = "solid";
+        document.getElementById("selectBazooka").style.borderWidth = "2px";
+        document.getElementById("selectBazooka").style.borderColor = "white";
+        document.getElementById("selectBazooka").style.borderRadius = "5px";
 
-    document.getElementById("typeGun").innerText = "You have choosen the bazooka (Price : 150)";
+        document.getElementById("selectCanon").style.border = "none";
+
+        document.getElementById("typeGun").innerText = "You have choosen the bazooka (Price : 150)";
+    }
+
+    else
+    {
+        typeGun = "";
+
+        document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("typeGun").innerText = "";
+    }
 });
 
 document.getElementById("restart").onclick = () =>
