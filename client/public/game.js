@@ -14,7 +14,7 @@ canvas.height = height;
 const aspectRatio = canvas.width / canvas.height;
 
 export const textureFire = new Image();
-textureFire.src = "img/Fire.png";
+textureFire.src = "client/public/img/Fire.png";
 
 export const sizeObstacles = 35;
 export const sizeTower = sizeObstacles;
