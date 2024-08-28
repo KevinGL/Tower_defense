@@ -98,26 +98,9 @@ export const Init = (obstacles, tower, ennemyTowers, ennemies, grill) =>
         
         for(let x = 0 ; x < width ; x += 1.1 * sizeObstacles)
         {
-            if(Math.random() < 0.1)
+            if(Math.random() < 0.1 && x != tower.x && y != tower.y)
             {
-                const posObstacle = { col, row };
-
-                /*console.log(posObstacle, path1.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}));
-                console.log(posObstacle, path2.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}));*/
-
-                /*if(path1.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}).length == 0 &&
-                   path2.filter((p) => {return p.col == posObstacle.col && p.row == posObstacle.row}).length == 0)*/
-                {
-                    obstacles.push({ x, y });
-                }
-
-                /*path1.map((p) =>
-                {
-                    if(p.col != posObstacle.col && p.row != posObstacle.row)
-                    {
-                        console.log("!");
-                    }
-                });*/
+                obstacles.push({ x, y });
             }
 
             col++;

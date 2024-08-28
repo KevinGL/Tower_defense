@@ -50,7 +50,7 @@ export const drawTower = (ctx) =>
     ctx.arc(tower.x, tower.y, 5, 0, Math.PI * 2, true);
     ctx.fillStyle = "#00ff00";
     ctx.fill();*/
-    
+
     drawRoundedRect(ctx, tower.x, tower.y, sizeTower, sizeTower, 5, "#27ae60");
 }
 
@@ -305,18 +305,21 @@ export const drawGuns = (ctx) =>
             else
             if(gun.typeGun == "Bazooka")
             {
-                ctx.strokeStyle = "#fca909";
+                if(gun.xAmmo != gun.x && gun.yAmmo != gun.y)
+                {
+                    ctx.strokeStyle = "#fca909";
                 
-                ctx.save();
-                ctx.translate(gun.xAmmo, gun.yAmmo);
-                ctx.rotate(gun.angle);
+                    ctx.save();
+                    ctx.translate(gun.xAmmo, gun.yAmmo);
+                    ctx.rotate(gun.angle);
 
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(20, 0);
-                ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(20, 0);
+                    ctx.stroke();
 
-                ctx.restore();
+                    ctx.restore();
+                }
 
                 if(Date.now() - gun.ts > 2000)
                 {
