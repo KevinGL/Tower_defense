@@ -1,5 +1,5 @@
 import { drawRoundedRect, collide, normalize, getLength, dot, convertColRow } from "./utils.js";
-import { sizeObstacles, obstacles, tower, sizeTower, ennemyTowers, typeGun, ennemies, ts, ennemySpeed, guns, relifeTower, clearGuns, reinitEnnemies, InitGrill, reinitAttacks, width, height, level, updateLevel, nbParts, textureFire, setPause } from "./game.js";
+import { sizeObstacles, obstacles, tower, sizeTower, ennemyTowers, typeGun, ennemies, ts, ennemySpeed, guns, relifeTower, grill, reinitEnnemies, InitGrill, reinitAttacks, width, height, level, updateLevel, nbParts, textureFire, setPause } from "./game.js";
 import { gapHp, resetTsModal } from "./gameLogic.js";
 import { gunProperties } from "./properties.js";
 
@@ -210,16 +210,44 @@ export const drawMessages = (ctx) =>
 
     //console.log(gunProperties[typeGun]);
 
-    if(typeGun != "")
+    const posMouse = convertColRow(xMouse, yMouse);
+    const posTower = convertColRow(tower.x, tower.y);
+    const posEnnemy1 = convertColRow(ennemyTowers[0].x, ennemyTowers[0].y);
+    const posEnnemy2 = convertColRow(ennemyTowers[1].x, ennemyTowers[1].y);
+
+    if(typeGun != "" &&
+        grill[posMouse.row][posMouse.col] == 0 &&
+        (posMouse.col != posTower.col || posMouse.row != posTower.row) &&
+        (posMouse.col != posEnnemy1.col || posMouse.row != posEnnemy1.row) &&
+        (posMouse.col != posEnnemy2.col || posMouse.row != posEnnemy2.row))
     {
         ctx.fillStyle = gunProperties[typeGun].fillStyle;
         ctx.globalAlpha = 0.5;
 
+        const xCase = Math.floor(xMouse / (1.1 * sizeTower)) * (1.1 * sizeTower);
+        const yCase = Math.floor(yMouse / (1.1 * sizeTower)) * (1.1 * sizeTower);
+
         ctx.beginPath();
-        ctx.arc(xMouse, yMouse, gunProperties[typeGun].distMax, 0, 2 * Math.PI, false);
+        ctx.arc(xCase + (sizeTower) / 2, yCase + (sizeTower) / 2, gunProperties[typeGun].distMax, 0, 2 * Math.PI, false);
         ctx.closePath();
 
         ctx.fill();
+
+        //drawRoundedRect(ctx, xCase, yCase, sizeTower, sizeTower, 5, "#ffffff");
+
+        ctx.fillStyle = gunProperties[typeGun].fillStyle;
+
+        ctx.beginPath();
+        ctx.arc(xCase + (sizeTower) / 2, yCase + (sizeTower) / 2, 10, 2 * Math.PI, false);
+        ctx.closePath();
+
+        ctx.save();
+        ctx.translate(xCase + (sizeTower) / 2, yCase + (sizeTower) / 2);
+
+        ctx.rect(5, -4, 10, 8);
+        ctx.fill();
+
+        ctx.restore();
     }
 }
 
