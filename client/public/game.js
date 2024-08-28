@@ -68,6 +68,14 @@ export const clearGuns = () =>
     guns.length = 0;
 }
 
+export const reinitGuns = () =>
+{
+    for(let i = 0 ; i < guns.length ; i++)
+    {
+        guns[i].target = -1;
+    }
+}
+
 export const reinitEnnemies = () =>
 {
     let offset = 0;
@@ -113,6 +121,15 @@ export const InitGrill = () =>
 
         grill.push(line);
     }
+
+    let line = [];
+
+    for(let x = 0 ; x < width ; x += 1.1 * sizeObstacles)
+    {
+        line.push(1);
+    }
+
+    grill.push(line);
 }
 
 export let level = 1;

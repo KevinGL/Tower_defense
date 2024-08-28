@@ -1,5 +1,5 @@
 import { drawRoundedRect, collide, normalize, getLength, dot, convertColRow } from "./utils.js";
-import { sizeObstacles, obstacles, tower, sizeTower, ennemyTowers, typeGun, ennemies, ts, ennemySpeed, guns, relifeTower, grill, reinitEnnemies, InitGrill, reinitAttacks, width, height, level, updateLevel, nbParts, textureFire, setPause } from "./game.js";
+import { sizeObstacles, obstacles, tower, sizeTower, ennemyTowers, typeGun, ennemies, ts, ennemySpeed, guns, relifeTower, grill, reinitEnnemies, reinitGuns, InitGrill, reinitAttacks, width, height, level, updateLevel, nbParts, textureFire, setPause } from "./game.js";
 import { gapHp, resetTsModal } from "./gameLogic.js";
 import { gunProperties } from "./properties.js";
 
@@ -158,6 +158,7 @@ export const drawEnnemies = (ctx) =>
         reinitAttacks();
 
         //clearGuns();
+        reinitGuns();
         relifeTower();
 
         updateLevel();

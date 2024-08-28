@@ -75,6 +75,7 @@ export const attacks = (tower, ennemies) =>
         {
             const posEnnemy = convertColRow(ennemies[gun.target].x, ennemies[gun.target].y);
             const posAmmo = convertColRow(gun.xAmmo, gun.yAmmo);
+            const dist = Math.sqrt(Math.pow(gun.x - ennemies[gun.target].x, 2) + Math.pow(gun.y - ennemies[gun.target].y, 2));
 
             if(posEnnemy.col == posAmmo.col && posEnnemy.row == posAmmo.row)
             {
@@ -129,7 +130,7 @@ export const attacks = (tower, ennemies) =>
             const posTarget = convertColRow(ennemies[gun.target].x, ennemies[gun.target].y);
             
             //if(dist > distMinGun || ennemies[gun.target].hp <= 0)
-            if(ennemies[gun.target].hp <= 0 || posTarget.col == posTower.col && posTarget.row == posTower.row)
+            if(ennemies[gun.target].hp <= 0 || posTarget.col == posTower.col && posTarget.row == posTower.row || dist > guns[i].distMax)
             {
                 guns[i].target = -1;
                 //console.log(`Cible de canon ${i} devient nulle`);
