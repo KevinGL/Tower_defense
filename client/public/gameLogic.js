@@ -152,8 +152,10 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
     const yCase = Math.floor(e.offsetY / (1.1 * sizeTower)) * (1.1 * sizeTower) + (1.1 * sizeTower / 2);
     let message = "";
 
+    const posTower = convertColRow(tower.x, tower.y);
     const posClick = convertColRow(e.offsetX, e.offsetY);
     //console.log(e.offsetX / width, (e.offsetX / width) * grill[0].length, Math.floor((e.offsetX / width) * grill[0].length));
+    console.log(posClick);
     
     let forbidden = false;
 
@@ -172,11 +174,10 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
 
     ennemyTowers.map((t) =>
     {
-        const posTower = convertColRow(t.x, t.y);
-
         //console.log(posTower, posClick);
+        const posTowerEnnemy = convertColRow(t.x, t.y);
 
-        if(posClick.col == posTower.col && posClick.row == posTower.row)
+        if(posClick.col == posTowerEnnemy.col && posClick.row == posTowerEnnemy.row)
         {
             forbidden = true;
             message = "You can't place gun on tower !";
@@ -194,7 +195,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
         }
     });*/
 
-    if(Math.abs(tower.x - xCase) <= sizeTower + 10 && Math.abs(tower.y - yCase) <= sizeTower + 10)
+    if(posClick.col == posTower.col && posClick.row == posTower.row)
     {
         forbidden = true;
         message = "You can't place gun on tower !";

@@ -488,3 +488,26 @@ export const createPaths = (ennemies) =>
         ennemies[i + 1].path = path2;
     }
 }
+
+export const drawPolygon = (ctx, x, y, radius, n) =>
+{
+    ctx.save();
+    ctx.translate(x, y);
+
+    ctx.beginPath();
+
+    ctx.moveTo(radius, 0);
+
+    for(let angle = 0 ; angle < 2 * Math.PI ; angle += (2 * Math.PI / n))
+    {
+        const xPos = radius * Math.cos(angle);
+        const yPos = radius * Math.sin(angle);
+        ctx.lineTo(xPos, yPos);
+    }
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.restore();
+}

@@ -1,4 +1,4 @@
-import { drawRoundedRect, collide, normalize, getLength, dot, convertColRow } from "./utils.js";
+import { drawRoundedRect, collide, normalize, getLength, dot, convertColRow, drawPolygon } from "./utils.js";
 import { sizeObstacles, obstacles, tower, sizeTower, ennemyTowers, typeGun, ennemies, ts, ennemySpeed, guns, relifeTower, grill, reinitEnnemies, reinitGuns, InitGrill, reinitAttacks, width, height, level, updateLevel, nbParts, textureFire, setPause } from "./game.js";
 import { gapHp, resetTsModal } from "./gameLogic.js";
 import { gunProperties } from "./properties.js";
@@ -238,12 +238,22 @@ export const drawMessages = (ctx) =>
 
         ctx.fillStyle = gunProperties[typeGun].fillStyle;
 
-        ctx.beginPath();
-        ctx.arc(xCase + (sizeTower) / 2, yCase + (sizeTower) / 2, 10, 2 * Math.PI, false);
-        ctx.closePath();
-
         ctx.save();
         ctx.translate(xCase + (sizeTower) / 2, yCase + (sizeTower) / 2);
+
+        if(typeGun == "Canon")
+        {
+            ctx.beginPath();
+            ctx.arc(0, 0, 10, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        else
+        if(typeGun == "Bazooka")
+        {
+            drawPolygon(ctx, 0, 0, 12, 5);
+        }
 
         ctx.rect(5, -4, 10, 8);
         ctx.fill();
@@ -298,13 +308,23 @@ export const drawGuns = (ctx) =>
             speed = 20;
         }*/
 
-        ctx.beginPath();
-        ctx.arc(gun.x, gun.y, 10, 2 * Math.PI, false);
-        ctx.closePath();
-
         ctx.save();
         ctx.translate(gun.x, gun.y);
         ctx.rotate(gun.angle);
+
+        if(gun.typeGun == "Canon")
+        {
+            ctx.beginPath();
+            ctx.arc(0, 0, 10, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        else
+        if(gun.typeGun == "Bazooka")
+        {
+            drawPolygon(ctx, 0, 0, 12, 5);
+        }
 
         ctx.rect(5, -4, 10, 8);
         ctx.fill();
