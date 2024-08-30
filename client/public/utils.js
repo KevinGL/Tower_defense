@@ -1,4 +1,5 @@
 import { sizeObstacles, sizeTower, deleteLastGun, grill, obstacles, InitGrill, width, height, ennemies, tower, ennemyTowers } from "./game.js";
+import { resetTsModal } from "./gameLogic.js";
 
 export function drawRoundedRect(ctx, x, y, width, height, radius, fillColor) {
     ctx.beginPath();
@@ -411,6 +412,11 @@ export const createPaths = (ennemies) =>
                 if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 2)
                 {
                     deleteLastGun();
+
+                    document.getElementsByClassName("message")[0].style.display = "block";
+                    document.getElementById("message").innerText = "You can't block ennemis !";
+                    resetTsModal();
+
                     break;
                 }
             }
@@ -512,6 +518,11 @@ export const createPaths = (ennemies) =>
                 if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 2)
                 {
                     deleteLastGun();
+
+                    document.getElementsByClassName("message")[0].style.display = "block";
+                    document.getElementById("message").innerText = "You can't block ennemis !";
+                    resetTsModal();
+
                     break;
                 }
             }
