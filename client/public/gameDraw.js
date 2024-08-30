@@ -38,7 +38,10 @@ export const drawObstacles = (ctx) =>
 {
     obstacles.map((o) =>
     {
-        drawRoundedRect(ctx, o.x, o.y, sizeObstacles, sizeObstacles, 5, "#4a4a4e");
+        if(o.active)
+        {
+            drawRoundedRect(ctx, o.x, o.y, sizeObstacles, sizeObstacles, 5, "#4a4a4e");
+        }
     });
 }
 

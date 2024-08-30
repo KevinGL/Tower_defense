@@ -100,6 +100,8 @@ export const attacks = (tower, ennemies) =>
 
                     const posTarget = { x: ennemies[gun.target].x, y: ennemies[gun.target].y };
 
+                    let cashUpdated = false;
+
                     for(let j = 0 ; j < ennemies.length ; j++)
                     {
                         const dist = Math.sqrt(Math.pow(posTarget.x - ennemies[j].x, 2) + Math.pow(posTarget.y - ennemies[j].y, 2));
@@ -111,7 +113,12 @@ export const attacks = (tower, ennemies) =>
                             if(ennemies[j].hp <= 0)
                             {
                                 ennemies[j].hp = 0;
-                                addCash(2);
+
+                                if(!cashUpdated)
+                                {
+                                    addCash(2);
+                                    cashUpdated = true;
+                                }
                             }
                         }
                     }

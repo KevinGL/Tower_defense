@@ -1,4 +1,4 @@
-import { sizeObstacles, sizeTower, ennemySpeed, grill, InitGrill, width, height, ennemies, tower, ennemyTowers } from "./game.js";
+import { sizeObstacles, sizeTower, ennemySpeed, grill, obstacles, InitGrill, width, height, ennemies, tower, ennemyTowers } from "./game.js";
 
 export function drawRoundedRect(ctx, x, y, width, height, radius, fillColor) {
     ctx.beginPath();
@@ -16,17 +16,17 @@ export function drawRoundedRect(ctx, x, y, width, height, radius, fillColor) {
     ctx.fill();
 }
 
-export const getObstacleByPos = (x, y) =>
+export const indexOfObstacles = (col, row) =>
 {
-    obstacles.map((o) =>
+    for(let i = 0 ; i < obstacles.length ; i++)
     {
-        if(Math.abs(x - o.x) <= sizeObstacles / 2 && Math.abs(y - o.y) <= sizeObstacles / 2)
+        if(obstacles[i].col == col && obstacles[i].row == row)
         {
-            return true;
+            return i;
         }
-    });
+    }
 
-    return false;
+    return -1;
 }
 
 export const Init = (obstacles, tower, ennemyTowers, ennemies, grill) =>
@@ -100,7 +100,7 @@ export const Init = (obstacles, tower, ennemyTowers, ennemies, grill) =>
         {
             if(Math.random() < 0.1 && x != tower.x && y != tower.y)
             {
-                obstacles.push({ x, y });
+                obstacles.push({ x, y, col, row, active: true });
             }
 
             col++;
@@ -389,6 +389,28 @@ export const createPaths = (ennemies) =>
 
         neighbors.forEach((n, i) =>
         {
+            if(i == 3 && costs.length == 0)
+            {
+                for(let j = 0 ; j < 4 ; j++)
+                {
+                    if(!visited.has(`${neighbors[j].col},${neighbors[j].row}`))
+                    {
+                        //setGrill(neighbors[j].col, neighbors[j].row, 0);
+
+                        console.log(`Retrait voisin gênant à ligne ${neighbors[j].row} et colonne ${neighbors[j].col}`);
+
+                        grill[neighbors[j].row][neighbors[j].col] = 0;
+
+                        const index = indexOfObstacles(neighbors[j].col, neighbors[j].row);
+
+                        if(index != -1)
+                        {
+                            obstacles[index].active = false;
+                        }
+                    }
+                }
+            }
+
             // Vérifier si le voisin est dans la grille et n'est pas un obstacle
             if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
             {

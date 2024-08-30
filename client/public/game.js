@@ -26,6 +26,10 @@ export let ennemies = [];
 export let guns = [];
 
 export let grill = [];
+export const setGrill = (col, row, value) =>
+{
+    grill[row][col] = value;
+}
 
 export let typeGun = "";
 export let cash = 200;
