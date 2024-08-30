@@ -57,7 +57,18 @@ export const addGun = (value) =>
 
     const coord = convertColRow(value.x, value.y);
 
-    grill[coord.row][coord.col] = 1;
+    grill[coord.row][coord.col] = 2;//1;
+}
+
+export const deleteLastGun = () =>
+{
+    const pos = { x: guns[guns.length - 1].x, y: guns[guns.length - 1].y };
+    
+    guns.pop();
+
+    const coord = convertColRow(pos.x, pos.y);
+
+    grill[coord.row][coord.col] = 0;
 }
 
 export const nbParts = 50;

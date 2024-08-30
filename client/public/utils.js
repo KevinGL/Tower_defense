@@ -1,4 +1,4 @@
-import { sizeObstacles, sizeTower, ennemySpeed, grill, obstacles, InitGrill, width, height, ennemies, tower, ennemyTowers } from "./game.js";
+import { sizeObstacles, sizeTower, deleteLastGun, grill, obstacles, InitGrill, width, height, ennemies, tower, ennemyTowers } from "./game.js";
 
 export function drawRoundedRect(ctx, x, y, width, height, radius, fillColor) {
     ctx.beginPath();
@@ -404,10 +404,38 @@ export const createPaths = (ennemies) =>
 
         if (costs.length === 0)
         {
+            for(let i = 0 ; i < neighbors.length ; i++)
+            {
+                const n = neighbors[i];
+                
+                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 2)
+                {
+                    deleteLastGun();
+                    break;
+                }
+            }
+
+            neighbors.forEach((n, i) =>
+            {
+                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
+                {
+                    if (!visited.has(`${n.col},${n.row}`))
+                    {
+                        const g = path1.length;
+                        const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
+                        const f = g + h;
+                        costs.push({ cost: f, neighbor: n });
+                    }
+                }
+            });
+        }
+
+        if (costs.length === 0)
+        {
             // Si aucun voisin valide, casse la boucle
             //break;
 
-            //console.log("Chemin 1 bloqué, recherche d'un chemin déjà emprunté");
+            console.log("Chemin 1 bloqué, recherche d'un chemin déjà emprunté");
 
             neighbors.forEach((n, i) =>
             {
@@ -477,10 +505,38 @@ export const createPaths = (ennemies) =>
 
         if (costs.length === 0)
         {
+            for(let i = 0 ; i < neighbors.length ; i++)
+            {
+                const n = neighbors[i];
+                
+                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 2)
+                {
+                    deleteLastGun();
+                    break;
+                }
+            }
+
+            neighbors.forEach((n, i) =>
+            {
+                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
+                {
+                    if (!visited.has(`${n.col},${n.row}`))
+                    {
+                        const g = path2.length;
+                        const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
+                        const f = g + h;
+                        costs.push({ cost: f, neighbor: n });
+                    }
+                }
+            });
+        }
+
+        if (costs.length === 0)
+        {
             // Si aucun voisin valide, casse la boucle
             //break;
 
-            //console.log("Chemin 2 bloqué, recherche d'un chemin déjà emprunté");
+            console.log("Chemin 2 bloqué, recherche d'un chemin déjà emprunté");
 
             neighbors.forEach((n, i) =>
             {
