@@ -244,18 +244,18 @@ export const drawMessages = (ctx) =>
         ctx.save();
         ctx.translate(xCase + (sizeTower) / 2, yCase + (sizeTower) / 2);
 
-        if(typeGun == "Canon")
+        if(gunProperties[typeGun].shape == "Circle")
         {
             ctx.beginPath();
-            ctx.arc(0, 0, 10, 2 * Math.PI, false);
+            ctx.arc(0, 0, gunProperties[typeGun].size, 2 * Math.PI, false);
             ctx.closePath();
             ctx.fill();
         }
         
         else
-        if(typeGun == "Bazooka")
+        if(gunProperties[typeGun].shape == "Pentagon")
         {
-            drawPolygon(ctx, 0, 0, 12, 5);
+            drawPolygon(ctx, 0, 0, gunProperties[typeGun].size, 5);
         }
 
         ctx.rect(5, -4, 10, 8);
@@ -296,37 +296,22 @@ export const drawGuns = (ctx) =>
 
         ctx.fillStyle = gunProperties[gun.typeGun].fillStyle;
 
-        /*let speed;
-
-        if(gun.typeGun == "Canon")
-        {
-            ctx.fillStyle = "#556ee6";
-            speed = 10;
-        }
-
-        else
-        if(gun.typeGun == "Bazooka")
-        {
-            ctx.fillStyle = "#fca909";
-            speed = 20;
-        }*/
-
         ctx.save();
         ctx.translate(gun.x, gun.y);
         ctx.rotate(gun.angle);
 
-        if(gun.typeGun == "Canon")
+        if(gunProperties[gun.typeGun].shape == "Circle")
         {
             ctx.beginPath();
-            ctx.arc(0, 0, 10, 2 * Math.PI, false);
+            ctx.arc(0, 0, gunProperties[gun.typeGun].size, 2 * Math.PI, false);
             ctx.closePath();
             ctx.fill();
         }
 
         else
-        if(gun.typeGun == "Bazooka")
+        if(gunProperties[gun.typeGun].shape == "Pentagon")
         {
-            drawPolygon(ctx, 0, 0, 12, 5);
+            drawPolygon(ctx, 0, 0, gunProperties[gun.typeGun].size, 5);
         }
 
         ctx.rect(5, -4, 10, 8);

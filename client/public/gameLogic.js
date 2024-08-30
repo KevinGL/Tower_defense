@@ -162,7 +162,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
     const posTower = convertColRow(tower.x, tower.y);
     const posClick = convertColRow(e.offsetX, e.offsetY);
     //console.log(e.offsetX / width, (e.offsetX / width) * grill[0].length, Math.floor((e.offsetX / width) * grill[0].length));
-    console.log(posClick);
+    //console.log(posClick);
     
     let forbidden = false;
 
