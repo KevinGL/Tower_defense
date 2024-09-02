@@ -403,66 +403,32 @@ export const createPaths = (ennemies) =>
             }
         });
 
-        if (costs.length === 0)
-        {
-            for(let i = 0 ; i < neighbors.length ; i++)
-            {
-                const n = neighbors[i];
-                
-                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 2)
-                {
-                    deleteLastGun();
-
-                    document.getElementsByClassName("message")[0].style.display = "block";
-                    document.getElementById("message").innerText = "You can't block ennemis !";
-                    resetTsModal();
-
-                    break;
-                }
-            }
-
-            neighbors.forEach((n, i) =>
-            {
-                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
-                {
-                    if (!visited.has(`${n.col},${n.row}`))
-                    {
-                        const g = path1.length;
-                        const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
-                        const f = g + h;
-                        costs.push({ cost: f, neighbor: n });
-                    }
-                }
-            });
-        }
-
-        if (costs.length === 0)
+        /*if (costs.length === 0)
         {
             // Si aucun voisin valide, casse la boucle
-            //break;
+            console.log("Chemin 1 bloqué");
+            break;
+        }*/
 
-            console.log("Chemin 1 bloqué, recherche d'un chemin déjà emprunté");
+        if (costs.length === 0)
+        {
+            console.log("Chemin 1 bloqué");
 
-            neighbors.forEach((n, i) =>
-            {
-                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
-                {
-                    //if (!visited.has(`${n.col},${n.row}`))
-                    {
-                        const g = path1.length; // Simplement la longueur du chemin parcouru pour représenter g
-                        const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
-                        const f = g + h;
-                        costs.push({ cost: f, neighbor: n });
-                    }
-                }
-            });
+            grill[current.row][current.col] = 1;
+
+            path1.pop();
+
+            current = { ...path1[path1.length - 1] };
         }
 
-        let nextStep = costs.reduce((acc, curr) => (curr.cost < acc.cost ? curr : acc));
+        else
+        {
+            let nextStep = costs.reduce((acc, curr) => (curr.cost < acc.cost ? curr : acc));
 
-        current = nextStep.neighbor;
-        visited.add(`${current.col},${current.row}`);
-        path1.push(current);
+            current = nextStep.neighbor;
+            visited.add(`${current.col},${current.row}`);
+            path1.push(current);
+        }
 
         j++;
 
@@ -472,6 +438,14 @@ export const createPaths = (ennemies) =>
             break;
         }
     }
+
+    /*path1 = path1.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+          t.col === value.col && t.row === value.row
+        ))
+      );
+    
+    console.log(path1);*/
 
     ///////////////////////////////////////////////////////////////////
 
@@ -510,65 +484,24 @@ export const createPaths = (ennemies) =>
         });
 
         if (costs.length === 0)
-        {
-            for(let i = 0 ; i < neighbors.length ; i++)
             {
-                const n = neighbors[i];
-                
-                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 2)
-                {
-                    deleteLastGun();
-
-                    document.getElementsByClassName("message")[0].style.display = "block";
-                    document.getElementById("message").innerText = "You can't block ennemis !";
-                    resetTsModal();
-
-                    break;
-                }
+                console.log("Chemin 2 bloqué");
+    
+                grill[current.row][current.col] = 1;
+    
+                path2.pop();
+    
+                current = { ...path1[path2.length - 1] };
             }
 
-            neighbors.forEach((n, i) =>
-            {
-                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
-                {
-                    if (!visited.has(`${n.col},${n.row}`))
-                    {
-                        const g = path2.length;
-                        const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
-                        const f = g + h;
-                        costs.push({ cost: f, neighbor: n });
-                    }
-                }
-            });
-        }
-
-        if (costs.length === 0)
+        else
         {
-            // Si aucun voisin valide, casse la boucle
-            //break;
+            let nextStep = costs.reduce((acc, curr) => (curr.cost < acc.cost ? curr : acc));
 
-            console.log("Chemin 2 bloqué, recherche d'un chemin déjà emprunté");
-
-            neighbors.forEach((n, i) =>
-            {
-                if (n.row >= 0 && n.row < grill.length && n.col >= 0 && n.col < grill[0].length && grill[n.row][n.col] == 0)
-                {
-                    //if (!visited.has(`${n.col},${n.row}`))
-                    {
-                        const g = path2.length; // Simplement la longueur du chemin parcouru pour représenter g
-                        const h = Math.sqrt(Math.pow(end.col - n.col, 2) + Math.pow(end.row - n.row, 2));
-                        const f = g + h;
-                        costs.push({ cost: f, neighbor: n });
-                    }
-                }
-            });
+            current = nextStep.neighbor;
+            visited.add(`${current.col},${current.row}`);
+            path2.push(current);
         }
-
-        let nextStep = costs.reduce((acc, curr) => (curr.cost < acc.cost ? curr : acc));
-
-        current = nextStep.neighbor;
-        visited.add(`${current.col},${current.row}`);
-        path2.push(current);
 
         j++;
 
