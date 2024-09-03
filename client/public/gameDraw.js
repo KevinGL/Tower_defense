@@ -219,7 +219,7 @@ export const drawMessages = (ctx) =>
     const posEnnemy1 = convertColRow(ennemyTowers[0].x, ennemyTowers[0].y);
     const posEnnemy2 = convertColRow(ennemyTowers[1].x, ennemyTowers[1].y);
 
-    if(typeGun != "" &&
+    if(typeGun != "" && xMouse > 0 && xMouse < 0.9 * width && yMouse > 0 && yMouse < 0.9 * height &&
         grill[posMouse.row][posMouse.col] == 0 &&
         (posMouse.col != posTower.col || posMouse.row != posTower.row) &&
         (posMouse.col != posEnnemy1.col || posMouse.row != posEnnemy1.row) &&
