@@ -191,13 +191,18 @@ export const attacks = (tower, ennemies) =>
 
 document.getElementById("gameCanvas").addEventListener("click", (e) =>
 {
-    const xCase = Math.floor(e.offsetX / (1.1 * sizeTower)) * (1.1 * sizeTower) + (1.1 * sizeTower / 2);
-    const yCase = Math.floor(e.offsetY / (1.1 * sizeTower)) * (1.1 * sizeTower) + (1.1 * sizeTower / 2);
+    const rect = document.getElementById("gameCanvas").getBoundingClientRect();
+
+    const xCursor = e.clientX - rect.left;
+    const yCursor = e.clientY - rect.top;
+    
+    const xCase = Math.floor(xCursor / (1.1 * sizeTower)) * (1.1 * sizeTower) + (1.1 * sizeTower / 2);
+    const yCase = Math.floor(yCursor / (1.1 * sizeTower)) * (1.1 * sizeTower) + (1.1 * sizeTower / 2);
     let message = "";
 
     const posTower = convertColRow(tower.x, tower.y);
-    const posClick = convertColRow(e.offsetX, e.offsetY);
-    //console.log(e.offsetX / width, (e.offsetX / width) * grill[0].length, Math.floor((e.offsetX / width) * grill[0].length));
+    const posClick = convertColRow(xCursor, yCursor);
+    //console.log(e.clientX / width, (e.clientX / width) * grill[0].length, Math.floor((e.clientX / width) * grill[0].length));
     //console.log(posClick);
     
     let forbidden = false;

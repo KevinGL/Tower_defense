@@ -280,6 +280,11 @@ document.addEventListener("mousemove", (e) =>
 {
     xMouse = e.clientX;
     yMouse = e.clientY;
+
+    const rect = document.getElementById("gameCanvas").getBoundingClientRect();
+
+    xMouse = e.clientX - rect.left;
+    yMouse = e.clientY - rect.top;
     //console.log(`Cursor coordinates relative to the viewport: X=${x}, Y=${y}`);
 });
 
