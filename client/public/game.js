@@ -239,10 +239,10 @@ document.getElementById("selectCanon").addEventListener("click", () =>
         document.getElementById("selectCanon").style.borderColor = "white";
         document.getElementById("selectCanon").style.borderRadius = "5px";
 
-        document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("selectSniper").style.border = "none";
         document.getElementById("selectLaser").style.border = "none";
 
-        document.getElementById("typeGun").innerText = "You have choosen the canon (Price : 50)";
+        document.getElementById("typeGun").innerText = "You have chosen the canon (Price : 50)";
     }
 
     else
@@ -254,28 +254,28 @@ document.getElementById("selectCanon").addEventListener("click", () =>
     }
 });
 
-document.getElementById("selectBazooka").addEventListener("click", () =>
+document.getElementById("selectSniper").addEventListener("click", () =>
 {
     if(typeGun == "")
     {
-        typeGun = "Bazooka";
+        typeGun = "Sniper";
 
-        document.getElementById("selectBazooka").style.border = "solid";
-        document.getElementById("selectBazooka").style.borderWidth = "2px";
-        document.getElementById("selectBazooka").style.borderColor = "white";
-        document.getElementById("selectBazooka").style.borderRadius = "5px";
+        document.getElementById("selectSniper").style.border = "solid";
+        document.getElementById("selectSniper").style.borderWidth = "2px";
+        document.getElementById("selectSniper").style.borderColor = "white";
+        document.getElementById("selectSniper").style.borderRadius = "5px";
 
         document.getElementById("selectCanon").style.border = "none";
         document.getElementById("selectLaser").style.border = "none";
 
-        document.getElementById("typeGun").innerText = "You have choosen the bazooka (Price : 150)";
+        document.getElementById("typeGun").innerText = "You have chosen the sniper (Price : 350)";
     }
 
     else
     {
         typeGun = "";
 
-        document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("selectSniper").style.border = "none";
         document.getElementById("typeGun").innerText = "";
     }
 });
@@ -291,10 +291,10 @@ document.getElementById("selectLaser").addEventListener("click", () =>
         document.getElementById("selectLaser").style.borderColor = "white";
         document.getElementById("selectLaser").style.borderRadius = "5px";
 
-        document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("selectSniper").style.border = "none";
         document.getElementById("selectCanon").style.border = "none";
 
-        document.getElementById("typeGun").innerText = "You have choosen the laser (Price : 400)";
+        document.getElementById("typeGun").innerText = "You have chosen the laser (Price : 400)";
     }
 
     else

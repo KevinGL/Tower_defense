@@ -95,7 +95,7 @@ export const attacks = (tower, ennemies) =>
                 }
 
                 else
-                if(gun.typeGun == "Bazooka")
+                if(gun.typeGun == "Sniper")
                 {
                     let damages = 0;
                     let damageRadius = 0;
@@ -268,7 +268,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
     }
 
     else
-    if(typeGun == "Bazooka")
+    if(typeGun == "Sniper")
     {
         price = 150;
         distMax = 100;

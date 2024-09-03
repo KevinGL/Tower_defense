@@ -244,33 +244,10 @@ export const drawMessages = (ctx) =>
         ctx.save();
         ctx.translate(xCase + (sizeTower) / 2, yCase + (sizeTower) / 2);
 
-        if(gunProperties[typeGun].shape == "Circle")
-        {
-            ctx.beginPath();
-            ctx.arc(0, 0, gunProperties[typeGun].size, 2 * Math.PI, false);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.rect(5, -4, 10, 8);
-            ctx.fill();
-        }
-        
-        else
-        if(gunProperties[typeGun].shape == "Pentagon")
-        {
-            drawPolygon(ctx, 0, 0, gunProperties[typeGun].size, 5);
-
-            ctx.rect(5, -4, 10, 8);
-            ctx.fill();
-        }
-
-        else
-        if(gunProperties[typeGun].shape == "Texture")
-        {
-            const size = gunProperties[typeGun].size;
+        const wImg = gunProperties[typeGun].width;
+        const hImg = gunProperties[typeGun].height;
             
-            ctx.drawImage(gunProperties[typeGun].img, -size / 2, -size / 2, size, size);
-        }
+        ctx.drawImage(gunProperties[typeGun].img, -wImg / 2, -hImg / 2, wImg, hImg);
 
         ctx.restore();
     }
@@ -316,33 +293,10 @@ export const drawGuns = (ctx) =>
         ctx.translate(gun.x, gun.y);
         ctx.rotate(gun.angle);
 
-        if(gunProperties[gun.typeGun].shape == "Circle")
-        {
-            ctx.beginPath();
-            ctx.arc(0, 0, gunProperties[gun.typeGun].size, 2 * Math.PI, false);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.rect(5, -4, 10, 8);
-            ctx.fill();
-        }
-
-        else
-        if(gunProperties[gun.typeGun].shape == "Pentagon")
-        {
-            drawPolygon(ctx, 0, 0, gunProperties[gun.typeGun].size, 5);
-
-            ctx.rect(5, -4, 10, 8);
-            ctx.fill();
-        }
-
-        else
-        if(gunProperties[gun.typeGun].shape == "Texture")
-        {
-            const size = gunProperties[gun.typeGun].size;
+        const wImg = gunProperties[gun.typeGun].width;
+        const hImg = gunProperties[gun.typeGun].height;
             
-            ctx.drawImage(gunProperties[gun.typeGun].img, -size / 2, -size / 2, size, size);
-        }
+        ctx.drawImage(gunProperties[gun.typeGun].img, -wImg / 2, -hImg / 2, wImg, hImg);
 
         ctx.restore();
 
@@ -369,7 +323,7 @@ export const drawGuns = (ctx) =>
             }
 
             else
-            if(gun.typeGun == "Bazooka")
+            if(gun.typeGun == "Sniper")
             {
                 if(gun.xAmmo != gun.x && gun.yAmmo != gun.y)
                 {
