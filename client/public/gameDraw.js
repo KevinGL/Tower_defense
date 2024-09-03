@@ -369,7 +369,7 @@ export const drawGuns = (ctx) =>
             }
 
             else
-            if(gun.typeGun == "Bazooka" || gun.typeGun == "Laser")
+            if(gun.typeGun == "Bazooka")
             {
                 if(gun.xAmmo != gun.x && gun.yAmmo != gun.y)
                 {
@@ -400,14 +400,45 @@ export const drawGuns = (ctx) =>
                 }
             }
 
-            //else
-            if(gun.typeGun == "Laser" && Date.now() - gun.ts <= delay)
+            else
+            if(gun.typeGun == "Laser")
             {
-                ctx.strokeStyle = "#ff0000";
-                ctx.beginPath();
-                ctx.moveTo(gun.x, gun.y);
-                ctx.lineTo(ennemies[gun.target].x, ennemies[gun.target].y);
-                ctx.stroke();
+                if(gun.xAmmo != gun.x && gun.yAmmo != gun.y)
+                {
+                    ctx.strokeStyle = "#fca909";
+                
+                    ctx.save();
+                    ctx.translate(gun.xAmmo, gun.yAmmo);
+                    ctx.rotate(gun.angle);
+
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(20, 0);
+                    ctx.stroke();
+
+                    ctx.restore();
+                }
+                
+                if(Date.now() - gun.ts > delay)
+                {
+                    gun.xAmmo += gunProperties[gun.typeGun].speed * vec.x;
+                    gun.yAmmo += gunProperties[gun.typeGun].speed * vec.y;
+
+                    if(gun.xAmmo < 0 || gun.xAmmo > width || gun.yAmmo < 0 || gun.yAmmo > height)
+                    {
+                        gun.xAmmo = gun.x;
+                        gun.yAmmo = gun.y;
+                    }
+                }
+
+                else
+                {
+                    ctx.strokeStyle = "#ff0000";
+                    ctx.beginPath();
+                    ctx.moveTo(gun.x, gun.y);
+                    ctx.lineTo(ennemies[gun.target].x, ennemies[gun.target].y);
+                    ctx.stroke();
+                }
             }
 
             //console.log(ennemyNearest.x- gun.xAmmo);

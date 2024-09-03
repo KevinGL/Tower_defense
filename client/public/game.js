@@ -10,8 +10,8 @@ export let height = parseInt(canvasStyle.height);
 
 export const ctx = canvas.getContext('2d');
 
-export const minDelayLaser = 3000;
-export const maxDelayLaser = 6000;
+export const minDelayLaser = 1000;
+export const maxDelayLaser = 3000;
 
 canvas.width = width;
 canvas.height = height;

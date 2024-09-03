@@ -95,38 +95,13 @@ export const attacks = (tower, ennemies) =>
                 }
 
                 else
-                if(gun.typeGun == "Bazooka" || gun.typeGun == "Laser")
+                if(gun.typeGun == "Bazooka")
                 {
                     let damages = 0;
                     let damageRadius = 0;
                     
-                    if(gun.typeGun == "Bazooka")
-                    {
-                        damages = 4;
-                        damageRadius = 100;
-                    }
-
-                    else
-                    if(gun.typeGun == "Laser")
-                    {
-                        let max = 10;
-                        let min = 2;
-                        let coef = (max - min) / (maxDelayLaser - minDelayLaser);
-                        let ord = -coef * minDelayLaser + min;
-                        
-                        damages = coef * gun.delay + ord;
-
-                        ///////////////
-
-                        max = 400;
-                        min = 100;
-                        coef = (max - min) / (maxDelayLaser - minDelayLaser);
-                        ord = -coef * minDelayLaser + min;
-
-                        damageRadius = coef * gun.delay + ord;
-
-                        //console.log(gun.delay, damages, damageRadius);
-                    }
+                    damages = 4;
+                    damageRadius = 100;
 
                     const posTarget = { x: ennemies[gun.target].x, y: ennemies[gun.target].y };
 
@@ -153,16 +128,45 @@ export const attacks = (tower, ennemies) =>
                         }
                     }
 
-                    if(gun.delay)
-                    {
-                        gun.delay =  Math.floor(Math.random() * (maxDelayLaser - minDelayLaser)) + minDelayLaser;
-                    }
-
                     for(let j = 0 ; j < nbParts ; j++)
                     {
                         guns[i].parts[j].x = posTarget.x;
                         guns[i].parts[j].y = posTarget.y;
                     }
+
+                    guns[i].ts = Date.now();
+                }
+
+                else
+                if(gun.typeGun == "Laser")
+                {
+                    let damages = 0;
+                    
+                    let max = 10;
+                    let min = 2;
+                    let coef = (max - min) / (maxDelayLaser - minDelayLaser);
+                    let ord = -coef * minDelayLaser + min;
+                    
+                    damages = coef * gun.delay + ord;
+
+                    const posTarget = { x: ennemies[gun.target].x, y: ennemies[gun.target].y };
+
+                    let cashUpdated = false;
+
+                    ennemies[gun.target].hp -= ennemies[gun.target].damage;
+
+                    if(ennemies[gun.target].hp <= 0)
+                    {
+                        ennemies[gun.target].hp = 0;
+                        addCash(2);
+                    }
+
+                    if(gun.delay)
+                    {
+                        gun.delay =  Math.floor(Math.random() * (maxDelayLaser - minDelayLaser)) + minDelayLaser;
+                    }
+
+                    gun.delay =  Math.floor(Math.random() * (maxDelayLaser - minDelayLaser)) + minDelayLaser;
 
                     guns[i].ts = Date.now();
                 }
