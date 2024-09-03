@@ -67,6 +67,7 @@ export const attacks = (tower, ennemies) =>
                 {
                     distMin = dist;
                     gun.target = j;
+                    gun.ts = Date.now();
                 }
             });
         }
@@ -97,21 +98,34 @@ export const attacks = (tower, ennemies) =>
                 if(gun.typeGun == "Bazooka" || gun.typeGun == "Laser")
                 {
                     let damages = 0;
+                    let damageRadius = 0;
                     
                     if(gun.typeGun == "Bazooka")
                     {
                         damages = 4;
+                        damageRadius = 100;
                     }
 
                     else
                     if(gun.typeGun == "Laser")
                     {
-                        const max = 10;
-                        const min = 2;
-                        const coef = (max - min) / (3000 - 1000);
-                        const ord = -coef * 1000 + min;
+                        let max = 10;
+                        let min = 2;
+                        let coef = (max - min) / (maxDelayLaser - minDelayLaser);
+                        let ord = -coef * minDelayLaser + min;
                         
                         damages = coef * gun.delay + ord;
+
+                        ///////////////
+
+                        max = 400;
+                        min = 100;
+                        coef = (max - min) / (maxDelayLaser - minDelayLaser);
+                        ord = -coef * minDelayLaser + min;
+
+                        damageRadius = coef * gun.delay + ord;
+
+                        //console.log(gun.delay, damages, damageRadius);
                     }
 
                     const posTarget = { x: ennemies[gun.target].x, y: ennemies[gun.target].y };
@@ -122,7 +136,7 @@ export const attacks = (tower, ennemies) =>
                     {
                         const dist = Math.sqrt(Math.pow(posTarget.x - ennemies[j].x, 2) + Math.pow(posTarget.y - ennemies[j].y, 2));
 
-                        if(dist < 100)
+                        if(dist < damageRadius)
                         {
                             ennemies[j].hp -= damages * ennemies[j].damage;
 
@@ -141,7 +155,7 @@ export const attacks = (tower, ennemies) =>
 
                     if(gun.delay)
                     {
-                        gun.delay =  Math.floor(Math.random()) * (maxDelayLaser - minDelayLaser) + minDelayLaser;
+                        gun.delay =  Math.floor(Math.random() * (maxDelayLaser - minDelayLaser)) + minDelayLaser;
                     }
 
                     for(let j = 0 ; j < nbParts ; j++)
@@ -284,7 +298,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
 
         if(gun.typeGun == "Laser")
         {
-            gun.delay = Math.floor(Math.random()) * (maxDelayLaser - minDelayLaser) + minDelayLaser;
+            gun.delay = Math.floor(Math.random() * (maxDelayLaser - minDelayLaser)) + minDelayLaser;
         }
         
         addGun({ ...gun });
