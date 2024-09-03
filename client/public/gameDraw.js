@@ -68,7 +68,7 @@ export const drawEnnemies = (ctx) =>
 
     let nbEnnemiesFinished = 0;
 
-    ennemies.map((e, i) =>
+    ennemies.map((e) =>
     {
         ctx.globalAlpha = e.hp / 10.0;
         
@@ -77,6 +77,19 @@ export const drawEnnemies = (ctx) =>
         ctx.fillStyle = "#c34667";
         ctx.fill();
 
+        let speed = ennemySpeed;
+
+        for(let i = 0 ; i < guns.length ; i++)
+        {
+            const distGun = Math.sqrt((guns[i].x - e.x) ** 2 + (guns[i].y - e.y) ** 2);
+
+            if(distGun <= gunProperties["Slower"].distMax)
+            {
+                speed /= 2;
+                break;
+            }
+        }
+
         if(Date.now() - ts >= e.offset && e.pathNode < e.path.length - 1)
         {
             let vecDisplace = { x: 0, y: 0 };
@@ -84,7 +97,7 @@ export const drawEnnemies = (ctx) =>
 
             if(e.path[e.pathNode + 1].col - e.path[e.pathNode].col > 0)
             {
-                vecDisplace = { x: ennemySpeed, y: 0 };
+                vecDisplace = { x: speed, y: 0 };
                 dist = Math.abs(e.x - (e.path[e.pathNode].col * 1.1 * sizeTower + 1.1 * sizeTower / 2));
                 distMax = Math.abs((e.path[e.pathNode + 1].col - e.path[e.pathNode].col) * 1.1 * sizeTower);
             }
@@ -92,7 +105,7 @@ export const drawEnnemies = (ctx) =>
             else
             if(e.path[e.pathNode + 1].col - e.path[e.pathNode].col < 0)
             {
-                vecDisplace = { x: -ennemySpeed, y: 0 };
+                vecDisplace = { x: -speed, y: 0 };
                 dist = Math.abs(e.x - (e.path[e.pathNode].col * 1.1 * sizeTower + 1.1 * sizeTower / 2));
                 distMax = Math.abs((e.path[e.pathNode].col - e.path[e.pathNode + 1].col) * 1.1 * sizeTower);
             }
@@ -100,7 +113,7 @@ export const drawEnnemies = (ctx) =>
             else
             if(e.path[e.pathNode + 1].row - e.path[e.pathNode].row > 0)
             {
-                vecDisplace = { x: 0, y: ennemySpeed };
+                vecDisplace = { x: 0, y: speed };
                 dist = Math.abs(e.y - (e.path[e.pathNode].row * 1.1 * sizeTower + 1.1 * sizeTower / 2));
                 distMax = Math.abs((e.path[e.pathNode + 1].row - e.path[e.pathNode].row) * 1.1 * sizeTower);
             }
@@ -108,7 +121,7 @@ export const drawEnnemies = (ctx) =>
             else
             if(e.path[e.pathNode + 1].row - e.path[e.pathNode].row < 0)
             {
-                vecDisplace = { x: 0, y: -ennemySpeed };
+                vecDisplace = { x: 0, y: -speed };
                 dist = Math.abs(e.y - (e.path[e.pathNode].row * 1.1 * sizeTower + 1.1 * sizeTower / 2));
                 distMax = Math.abs((e.path[e.pathNode].row - e.path[e.pathNode + 1].row) * 1.1 * sizeTower);
             }
@@ -291,7 +304,11 @@ export const drawGuns = (ctx) =>
 
         ctx.save();
         ctx.translate(gun.x, gun.y);
-        ctx.rotate(gun.angle);
+
+        if(!gunProperties[gun.typeGun].lockRot)
+        {
+            ctx.rotate(gun.angle);
+        }
 
         const wImg = gunProperties[gun.typeGun].width;
         const hImg = gunProperties[gun.typeGun].height;

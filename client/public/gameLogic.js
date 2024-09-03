@@ -177,7 +177,7 @@ export const attacks = (tower, ennemies) =>
             
             //if(dist > distMinGun || ennemies[gun.target].hp <= 0)
             if(ennemies[gun.target].hp <= 0 || posTarget.col == posTower.col &&
-                posTarget.row == posTower.row || dist > guns[i].distMax && !gunProperties[gun.typeGun].focaliseOne)
+                posTarget.row == posTower.row || dist > guns[i].distMax && !gun.typeGun != "Laser")
             {
                 guns[i].target = -1;
                 //console.log(`Cible de arme de type ${gun.typeGun} devient nulle`);
