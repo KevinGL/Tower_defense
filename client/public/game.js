@@ -8,6 +8,11 @@ const canvasStyle = window.getComputedStyle(canvas);
 export let width = parseInt(canvasStyle.width);
 export let height = parseInt(canvasStyle.height);
 
+export const ctx = canvas.getContext('2d');
+
+export const minDelayLaser = 3000;
+export const maxDelayLaser = 6000;
+
 canvas.width = width;
 canvas.height = height;
 
@@ -175,7 +180,6 @@ function update()
     if(!pause)
     {
         //const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
         const ratio = window.innerWidth / window.innerHeight;
         canvas.height = canvas.width / ratio;       //Responsive
 
@@ -236,6 +240,7 @@ document.getElementById("selectCanon").addEventListener("click", () =>
         document.getElementById("selectCanon").style.borderRadius = "5px";
 
         document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("selectLaser").style.border = "none";
 
         document.getElementById("typeGun").innerText = "You have choosen the canon (Price : 50)";
     }
@@ -261,6 +266,7 @@ document.getElementById("selectBazooka").addEventListener("click", () =>
         document.getElementById("selectBazooka").style.borderRadius = "5px";
 
         document.getElementById("selectCanon").style.border = "none";
+        document.getElementById("selectLaser").style.border = "none";
 
         document.getElementById("typeGun").innerText = "You have choosen the bazooka (Price : 150)";
     }
@@ -270,6 +276,32 @@ document.getElementById("selectBazooka").addEventListener("click", () =>
         typeGun = "";
 
         document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("typeGun").innerText = "";
+    }
+});
+
+document.getElementById("selectLaser").addEventListener("click", () =>
+{
+    if(typeGun == "")
+    {
+        typeGun = "Laser";
+
+        document.getElementById("selectLaser").style.border = "solid";
+        document.getElementById("selectLaser").style.borderWidth = "2px";
+        document.getElementById("selectLaser").style.borderColor = "white";
+        document.getElementById("selectLaser").style.borderRadius = "5px";
+
+        document.getElementById("selectBazooka").style.border = "none";
+        document.getElementById("selectCanon").style.border = "none";
+
+        document.getElementById("typeGun").innerText = "You have choosen the laser (Price : 400)";
+    }
+
+    else
+    {
+        typeGun = "";
+
+        document.getElementById("selectLaser").style.border = "none";
         document.getElementById("typeGun").innerText = "";
     }
 });

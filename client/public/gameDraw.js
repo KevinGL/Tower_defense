@@ -250,16 +250,27 @@ export const drawMessages = (ctx) =>
             ctx.arc(0, 0, gunProperties[typeGun].size, 2 * Math.PI, false);
             ctx.closePath();
             ctx.fill();
+
+            ctx.rect(5, -4, 10, 8);
+            ctx.fill();
         }
         
         else
         if(gunProperties[typeGun].shape == "Pentagon")
         {
             drawPolygon(ctx, 0, 0, gunProperties[typeGun].size, 5);
+
+            ctx.rect(5, -4, 10, 8);
+            ctx.fill();
         }
 
-        ctx.rect(5, -4, 10, 8);
-        ctx.fill();
+        else
+        if(gunProperties[typeGun].shape == "Texture")
+        {
+            const size = gunProperties[typeGun].size;
+            
+            ctx.drawImage(gunProperties[typeGun].img, -size / 2, -size / 2, size, size);
+        }
 
         ctx.restore();
     }
@@ -306,21 +317,34 @@ export const drawGuns = (ctx) =>
             ctx.arc(0, 0, gunProperties[gun.typeGun].size, 2 * Math.PI, false);
             ctx.closePath();
             ctx.fill();
+
+            ctx.rect(5, -4, 10, 8);
+            ctx.fill();
         }
 
         else
         if(gunProperties[gun.typeGun].shape == "Pentagon")
         {
             drawPolygon(ctx, 0, 0, gunProperties[gun.typeGun].size, 5);
+
+            ctx.rect(5, -4, 10, 8);
+            ctx.fill();
         }
 
-        ctx.rect(5, -4, 10, 8);
-        ctx.fill();
+        else
+        if(gunProperties[gun.typeGun].shape == "Texture")
+        {
+            const size = gunProperties[gun.typeGun].size;
+            
+            ctx.drawImage(gunProperties[gun.typeGun].img, -size / 2, -size / 2, size, size);
+        }
 
         ctx.restore();
 
         if(gun.target != -1)// && Math.abs(ennemies[gun.target].x - xTower) > sizeTower / 2 && Math.abs(ennemies[gun.target].y - yTower) > sizeTower / 2)
         {
+            const delay = gun.delay ?? 2000;
+            
             if(gun.typeGun == "Canon")
             {
                 ctx.beginPath();
@@ -340,7 +364,7 @@ export const drawGuns = (ctx) =>
             }
 
             else
-            if(gun.typeGun == "Bazooka")
+            if(gun.typeGun == "Bazooka" || gun.typeGun == "Laser")
             {
                 if(gun.xAmmo != gun.x && gun.yAmmo != gun.y)
                 {
@@ -358,7 +382,7 @@ export const drawGuns = (ctx) =>
                     ctx.restore();
                 }
 
-                if(Date.now() - gun.ts > 2000)
+                if(Date.now() - gun.ts > delay)
                 {
                     gun.xAmmo += gunProperties[gun.typeGun].speed * vec.x;
                     gun.yAmmo += gunProperties[gun.typeGun].speed * vec.y;
@@ -371,6 +395,16 @@ export const drawGuns = (ctx) =>
                 }
             }
 
+            //else
+            if(gun.typeGun == "Laser" && Date.now() - gun.ts <= delay)
+            {
+                ctx.strokeStyle = "#ff0000";
+                ctx.beginPath();
+                ctx.moveTo(gun.x, gun.y);
+                ctx.lineTo(ennemies[gun.target].x, ennemies[gun.target].y);
+                ctx.stroke();
+            }
+
             //console.log(ennemyNearest.x- gun.xAmmo);
         }
 
@@ -379,7 +413,7 @@ export const drawGuns = (ctx) =>
         //ctx.fillStyle = "#ffff00";
         const partSize = 60;
 
-        if(gun.typeGun == "Bazooka")
+        if(gunProperties[gun.typeGun].damages == "Explosion")
         {
             let addDisapparead = true;
             

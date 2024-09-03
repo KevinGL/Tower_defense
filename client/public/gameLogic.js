@@ -1,4 +1,4 @@
-import { sizeTower, ennemyTowers, addGun, obstacles, tower, guns, ennemies, ennemiesAttacked, addAttack, typeGun, nbParts, cash, addCash } from "./game.js";
+import { sizeTower, ennemyTowers, addGun, obstacles, tower, guns, ennemies, ennemiesAttacked, addAttack, typeGun, nbParts, cash, addCash, minDelayLaser, maxDelayLaser } from "./game.js";
 import { convertColRow } from "./utils.js";
 import { gunProperties } from "./properties.js";
 
@@ -94,9 +94,25 @@ export const attacks = (tower, ennemies) =>
                 }
 
                 else
-                if(gun.typeGun == "Bazooka")
+                if(gun.typeGun == "Bazooka" || gun.typeGun == "Laser")
                 {
-                    //ennemies[gun.target].hp -= 4 * ennemies[gun.target].damage;
+                    let damages = 0;
+                    
+                    if(gun.typeGun == "Bazooka")
+                    {
+                        damages = 4;
+                    }
+
+                    else
+                    if(gun.typeGun == "Laser")
+                    {
+                        const max = 10;
+                        const min = 2;
+                        const coef = (max - min) / (3000 - 1000);
+                        const ord = -coef * 1000 + min;
+                        
+                        damages = coef * gun.delay + ord;
+                    }
 
                     const posTarget = { x: ennemies[gun.target].x, y: ennemies[gun.target].y };
 
@@ -108,7 +124,7 @@ export const attacks = (tower, ennemies) =>
 
                         if(dist < 100)
                         {
-                            ennemies[j].hp -= 4 * ennemies[j].damage;
+                            ennemies[j].hp -= damages * ennemies[j].damage;
 
                             if(ennemies[j].hp <= 0)
                             {
@@ -121,6 +137,11 @@ export const attacks = (tower, ennemies) =>
                                 }
                             }
                         }
+                    }
+
+                    if(gun.delay)
+                    {
+                        gun.delay =  Math.floor(Math.random()) * (maxDelayLaser - minDelayLaser) + minDelayLaser;
                     }
 
                     for(let j = 0 ; j < nbParts ; j++)
@@ -137,10 +158,11 @@ export const attacks = (tower, ennemies) =>
             const posTarget = convertColRow(ennemies[gun.target].x, ennemies[gun.target].y);
             
             //if(dist > distMinGun || ennemies[gun.target].hp <= 0)
-            if(ennemies[gun.target].hp <= 0 || posTarget.col == posTower.col && posTarget.row == posTower.row || dist > guns[i].distMax)
+            if(ennemies[gun.target].hp <= 0 || posTarget.col == posTower.col &&
+                posTarget.row == posTower.row || dist > guns[i].distMax && !gunProperties[gun.typeGun].focaliseOne)
             {
                 guns[i].target = -1;
-                //console.log(`Cible de canon ${i} devient nulle`);
+                //console.log(`Cible de arme de type ${gun.typeGun} devient nulle`);
 
                 gun.xAmmo = gun.x;
                 gun.yAmmo = gun.y;
@@ -257,8 +279,15 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
             
             parts.push({ x: 0, y: 0, dir: vec, life: 1, speed });
         }
+
+        const gun = { x: xCase, y: yCase, xAmmo: xCase, yAmmo: yCase, target: -1, angle: 0, typeGun, ts: Date.now(), parts, distMax };
+
+        if(gun.typeGun == "Laser")
+        {
+            gun.delay = Math.floor(Math.random()) * (maxDelayLaser - minDelayLaser) + minDelayLaser;
+        }
         
-        addGun({ x: xCase, y: yCase, xAmmo: xCase, yAmmo: yCase, target: -1, angle: 0, typeGun, ts: Date.now(), parts, distMax });
+        addGun({ ...gun });
 
         addCash(-price);
     }
