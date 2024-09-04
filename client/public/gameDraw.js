@@ -83,7 +83,7 @@ export const drawEnnemies = (ctx) =>
         {
             const distGun = Math.sqrt((guns[i].x - e.x) ** 2 + (guns[i].y - e.y) ** 2);
 
-            if(distGun <= gunProperties["Slower"].distMax)
+            if(distGun <= gunProperties["Slower"].distMax && guns[i].typeGun == "Slower")
             {
                 speed /= 2;
                 break;
@@ -418,7 +418,7 @@ export const drawGuns = (ctx) =>
         ////////////////////////////////////////
 
         //ctx.fillStyle = "#ffff00";
-        const partSize = 60;
+        /*const partSize = 60;
 
         if(gunProperties[gun.typeGun].damages == "Explosion")
         {
@@ -432,14 +432,6 @@ export const drawGuns = (ctx) =>
 
                     ctx.drawImage(textureFire, part.x, part.y, partSize, partSize);
                     
-                    /*ctx.rect(part.x - partSize / 2, part.y - partSize / 2, partSize, partSize);
-                    ctx.fill();*/
-
-                    /*ctx.beginPath();
-                    ctx.arc(part.x, part.y, partSize, 2 * Math.PI, false);
-                    ctx.closePath();
-                    ctx.fill();*/
-
                     guns[i].parts[j].x += guns[i].parts[j].speed * guns[i].parts[j].dir.x;
                     guns[i].parts[j].y += guns[i].parts[j].speed * guns[i].parts[j].dir.y;
                     guns[i].parts[j].life -= 0.025;
@@ -468,6 +460,6 @@ export const drawGuns = (ctx) =>
             ctx.globalAlpha = 1;
         }
 
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle = "#ffffff";*/
     });
 }
