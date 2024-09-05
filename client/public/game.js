@@ -41,7 +41,8 @@ export let cash = 200;
 export let addCash = (value) =>
 {
     cash += value;
-    document.getElementById("cash").innerText = `Cash : ${cash}`;
+    document.getElementById("cash").innerText = `${cash}`;
+    document.getElementById("cash").style.color = "#2fcc71";
 }
 
 export let ennemiesAttacked = [];
@@ -234,13 +235,13 @@ document.getElementById("selectCanon").addEventListener("click", () =>
     {
         typeGun = "Canon";
 
-        document.getElementById("selectCanon").style.border = "solid";
+        /*document.getElementById("selectCanon").style.border = "solid";
         document.getElementById("selectCanon").style.borderWidth = "2px";
         document.getElementById("selectCanon").style.borderColor = "white";
         document.getElementById("selectCanon").style.borderRadius = "5px";
 
         document.getElementById("selectSniper").style.border = "none";
-        document.getElementById("selectLaser").style.border = "none";
+        document.getElementById("selectLaser").style.border = "none";*/
 
         document.getElementById("typeGun").innerText = "You have chosen the canon (Price : 50)";
     }
@@ -249,7 +250,7 @@ document.getElementById("selectCanon").addEventListener("click", () =>
     {
         typeGun = "";
 
-        document.getElementById("selectCanon").style.border = "none";
+        //document.getElementById("selectCanon").style.border = "none";
         document.getElementById("typeGun").innerText = "";
     }
 });
@@ -260,14 +261,14 @@ document.getElementById("selectSniper").addEventListener("click", () =>
     {
         typeGun = "Sniper";
 
-        document.getElementById("selectSniper").style.border = "solid";
+        /*document.getElementById("selectSniper").style.border = "solid";
         document.getElementById("selectSniper").style.borderWidth = "2px";
         document.getElementById("selectSniper").style.borderColor = "white";
         document.getElementById("selectSniper").style.borderRadius = "5px";
 
         document.getElementById("selectCanon").style.border = "none";
         document.getElementById("selectLaser").style.border = "none";
-        document.getElementById("selectSlower").style.border = "none";
+        document.getElementById("selectSlower").style.border = "none";*/
 
         document.getElementById("typeGun").innerText = "You have chosen the sniper (Price : 350)";
     }
@@ -276,7 +277,7 @@ document.getElementById("selectSniper").addEventListener("click", () =>
     {
         typeGun = "";
 
-        document.getElementById("selectSniper").style.border = "none";
+        //document.getElementById("selectSniper").style.border = "none";
         document.getElementById("typeGun").innerText = "";
     }
 });
@@ -287,14 +288,14 @@ document.getElementById("selectLaser").addEventListener("click", () =>
     {
         typeGun = "Laser";
 
-        document.getElementById("selectLaser").style.border = "solid";
+        /*document.getElementById("selectLaser").style.border = "solid";
         document.getElementById("selectLaser").style.borderWidth = "2px";
         document.getElementById("selectLaser").style.borderColor = "white";
         document.getElementById("selectLaser").style.borderRadius = "5px";
 
         document.getElementById("selectSniper").style.border = "none";
         document.getElementById("selectCanon").style.border = "none";
-        document.getElementById("selectSlower").style.border = "none";
+        document.getElementById("selectSlower").style.border = "none";*/
 
         document.getElementById("typeGun").innerText = "You have chosen the laser (Price : 400)";
     }
@@ -303,7 +304,7 @@ document.getElementById("selectLaser").addEventListener("click", () =>
     {
         typeGun = "";
 
-        document.getElementById("selectLaser").style.border = "none";
+        //document.getElementById("selectLaser").style.border = "none";
         document.getElementById("typeGun").innerText = "";
     }
 });
@@ -314,14 +315,14 @@ document.getElementById("selectSlower").addEventListener("click", () =>
     {
         typeGun = "Slower";
 
-        document.getElementById("selectSlower").style.border = "solid";
+        /*document.getElementById("selectSlower").style.border = "solid";
         document.getElementById("selectSlower").style.borderWidth = "2px";
         document.getElementById("selectSlower").style.borderColor = "white";
         document.getElementById("selectSlower").style.borderRadius = "5px";
 
         document.getElementById("selectSniper").style.border = "none";
         document.getElementById("selectCanon").style.border = "none";
-        document.getElementById("selectLaser").style.border = "none";
+        document.getElementById("selectLaser").style.border = "none";*/
 
         document.getElementById("typeGun").innerText = "You have chosen the slower (Price : 150)";
     }
@@ -330,7 +331,7 @@ document.getElementById("selectSlower").addEventListener("click", () =>
     {
         typeGun = "";
 
-        document.getElementById("selectLaser").style.border = "none";
+        //document.getElementById("selectLaser").style.border = "none";
         document.getElementById("typeGun").innerText = "";
     }
 });

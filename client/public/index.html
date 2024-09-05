@@ -11,6 +11,7 @@
             height: 100%;
             overflow: hidden;
             background: linear-gradient(to bottom, black, #454545);
+            font-family: Nunito,sans-serif;
         }
         canvas {
             display: block;
@@ -47,7 +48,7 @@
             z-index: 1000; /* Au-dessus du contenu */
             left: 2%;
             top: 2%;
-            width: 20%; /* Largeur complète de l'écran */
+            width: 25%; /* Largeur complète de l'écran */
             height: 75%; /* Hauteur complète de l'écran */
             border-radius: 10px;
             overflow: auto; /* Activer le défilement si nécessaire */
@@ -57,10 +58,10 @@
         /* Contenu de la modale */
         .modal-content {
             text-align: center;
-            font-family: 'Arial', sans-serif;
+            /*font-family: 'Arial', sans-serif;*/
             font-size: 18px;
             color: #a5a5a5;
-            margin-top: 20%;
+            margin-top: 8%;
             padding: 5%;
         }
 
@@ -92,7 +93,7 @@
 
         button {
             background-color: transparent; /* Assurez-vous que le fond du bouton est transparent */
-            border: none; /* Si vous voulez supprimer une bordure */
+            /*border: none; /* Si vous voulez supprimer une bordure */
             color: #a5a5a5;
         }
 
@@ -104,48 +105,56 @@
         img {
             background-color: transparent; /* Assurez-vous que l'image n'a pas de fond */
         }
+
+        h1:before {
+            content: " - ";
+            color: #2fcc71;
+        }
+
+        h1:after {
+            content: " - ";
+            color: #2fcc71;
+        }
     </style>
 </head>
 <body>
-    <!--<h1 class="neon-text" style="text-align: center; font-size: 48px;">TOWER DEFENSE</h1>
-    <h1 id="level" class="neon-text">Difficulté 1</h1>
-    <h1 id="money" class="neon-text">200</h1>-->
     <canvas id="gameCanvas"></canvas>
-    <div class="menu">
-        <div class="modal-content">
-            <div style="font-size: 30px; margin-bottom: 10%;">Tower Defense</div>
-            <hr style="margin-bottom: 10%;">
-            <div id="level">Level : 1</div>
-            <div id="cash">Cash : 200</div>
-            <div id="life">Life : 100 %</div>
-            <hr style="margin-bottom: 10%; margin-top: 10%;">
-            <div style="display: flex; flex-wrap: nowrap; justify-content: space-evenly;">
-                <button id="selectCanon" style="width: 25%;">
-                    <img src="client/public/img/Canon.png" alt="Canon" style="width: 50%;">
-                </button>
-                <button id="selectSniper" style="width: 25%;">
-                    <img src="client/public/img/Sniper.png" alt="Sniper" style="width: 50%;">
-                </button>
-                <button id="selectLaser" style="width: 25%;">
-                    <img src="client/public/img/Laser.png" alt="Laser" style="width: 50%;">
-                </button>
-                <button id="selectSlower" style="width: 25%;">
-                    <img src="client/public/img/Slower.png" alt="Laser" style="width: 50%;">
-                </button>
+        <div class="menu">
+            <div class="modal-content">
+                <h1 style="margin-bottom: 5%; text-transform: uppercase; text-align: center; font-size: 2.5em; font-weight: 300; margin-top: 10px;">massa</h1>
+                <div class="subtitle" style="text-align: center; margin-top: 10px; margin-bottom: 20px; font-size: 0.9em;">Minimalistic Tower Defense</div>
+                <hr style="display: block; height: 1px; border: 0; border-top: 1px solid #575757; margin: 1em 0; padding: 0;">
+                <div>Level : <span id="level" style="color: #2fcc71">1</span></div>
+                <div>Cash : <span id="cash" style="color: #2fcc71">200</span></div>
+                <div>Life : <span id="life" style="color: #2fcc71">100 %</span></div>
+                <hr style="display: block; height: 1px; border: 0; border-top: 1px solid #575757; margin: 1em 0; padding: 0;">
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                    <button id="selectCanon" style="width: 25%; border: 1px solid #575757; border-right-width: 0; cursor: pointer;">
+                        <img src="client/public/img/Canon.png" alt="Canon" style="width: 50%;">
+                    </button>
+                    <button id="selectSniper" style="width: 25%; border: 1px solid #575757; border-right-width: 0; cursor: pointer;">
+                        <img src="client/public/img/Sniper.png" alt="Sniper" style="width: 50%;">
+                    </button>
+                    <button id="selectLaser" style="width: 25%; border: 1px solid #575757; border-right-width: 0; cursor: pointer;">
+                        <img src="client/public/img/Laser.png" alt="Laser" style="width: 50%;">
+                    </button>
+                    <button id="selectSlower" style="width: 25%; border: 1px solid #575757; border-right-width: 0; cursor: pointer;">
+                        <img src="client/public/img/Slower.png" alt="Slower" style="width: 50%;">
+                    </button>
+                </div>
+                <div id="typeGun" style="margin-top: 10%;"></div>
             </div>
-            <div id="typeGun" style="margin-top: 10%;"></div>
         </div>
-    </div>
-    <div class="message">
-        <div class="modal-content" style="margin-top: 0;" id="message"></div>
-    </div>
-    <div class="game_over">
-        <div class="modal-content" style="margin-top: 0;">
-            GAME OVER
-            <br>
-            <button id="restart" style="color: #a5a5a5">RESTART</button>
+        <div class="message">
+            <div class="modal-content" style="margin-top: 0;" id="message"></div>
         </div>
-    </div>
+        <div class="game_over">
+            <div class="modal-content" style="margin-top: 0;">
+                GAME OVER
+                <br>
+                <button id="restart" style="color: #a5a5a5">RESTART</button>
+            </div>
+        </div>
     <script src="client/public/game.js" type="module"></script>
 </body>
 </html>

@@ -180,7 +180,8 @@ export const drawEnnemies = (ctx) =>
         updateLevel();
 
         //console.log("REINIT ENNEMIES");
-        document.getElementById("level").innerText = `Level : ${level}`;
+        document.getElementById("level").innerText = ` ${level}`;
+        document.getElementById("level").style.color = "#2fcc71";
     }
 
     ctx.globalAlpha = 1;
@@ -213,7 +214,8 @@ export const drawMessages = (ctx) =>
 
         ctx.fill();*/
 
-        document.getElementById("life").innerText = `Life : ${Math.floor((tower.hp / 10) * 100)} %`;
+        document.getElementById("life").innerText = `${Math.floor((tower.hp / 10) * 100)} %`;
+        document.getElementById("life").style.color = "#2fcc71";
     }
 
     else
