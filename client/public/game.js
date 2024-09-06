@@ -203,10 +203,10 @@ function update()
         indexThick++;
     }
 
-    //console.log(pause);
+    //console.log(Date.now() - tsModal);
     if(Date.now() - tsModal > 5000)
     {
-        document.getElementsByClassName("message")[0].style.display = "none";
+        document.getElementById("snackbar").style.opacity = "0";
     }
 }
 

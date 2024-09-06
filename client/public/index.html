@@ -141,6 +141,21 @@
             content: " - ";
             color: #2fcc71;
         }
+
+        #snackbar {
+            opacity: 0;
+            background-color: #454545;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px 30px;
+            margin-top: 32px;
+            position: fixed;
+            z-index: 3;
+            left: 50%;
+            transform: translate(-50%);
+            box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+        }
     </style>
 </head>
 <body>
@@ -171,8 +186,7 @@
                 <div id="typeGun" style="margin-top: 10%;"></div>
             </div>
         </div>
-        <div class="message">
-            <div class="modal-content" style="margin-top: 0;" id="message"></div>
+        <div id="snackbar">
         </div>
         <div class="game_over">
             <div class="description">

@@ -317,8 +317,8 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
 
     else
     {
-        document.getElementsByClassName("message")[0].style.display = "block";
-        document.getElementById("message").innerText = message;
+        document.getElementById("snackbar").style.opacity = "1";
+        document.getElementById("snackbar").innerText = message;
         tsModal = Date.now();
     }
 });
