@@ -80,15 +80,41 @@
 
         .game_over {
             display: none; /* Cacher la modale par défaut */
-            position: fixed; /* Fixé en haut de la page */
-            z-index: 1500; /* Au-dessus du contenu */
-            left: 30%;
-            top: 2%;
-            width: 40%; /* Largeur complète de l'écran */
-            height: 25%; /* Hauteur complète de l'écran */
-            border-radius: 10px;
-            /*overflow: auto;*/ /* Activer le défilement si nécessaire */
-            background-color: rgba(64, 64, 64, 0.4)/* Fond semi-transparent */
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            color: #2fcc71;
+            z-index: 10000;
+            width: 100%;
+            /*display: flex;*/
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            padding: 50px 0;
+            transition: opacity .5s ease;
+            background-color: rgba(52, 52, 52, .5);
+            box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12);
+
+            .description
+            {
+                font-size: 45px;
+                padding-bottom: 30px;
+                text-align: center;
+            }
+
+            button
+            {
+                text-transform: uppercase;
+                padding: 10px 20px;
+                background-color: initial;
+                border: 1px solid #a5a5a5;
+                border-radius: 50px;
+                color: #a5a5a5;
+                cursor: pointer;
+                transition: all .2s ease;
+            }
         }
 
         button {
@@ -149,10 +175,10 @@
             <div class="modal-content" style="margin-top: 0;" id="message"></div>
         </div>
         <div class="game_over">
-            <div class="modal-content" style="margin-top: 0;">
+            <div class="description">
                 GAME OVER
                 <br>
-                <button id="restart" style="color: #a5a5a5">RESTART</button>
+                <button id="restart">RESTART</button>
             </div>
         </div>
     <script src="client/public/game.js" type="module"></script>

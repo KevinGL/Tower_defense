@@ -223,7 +223,11 @@ export const drawMessages = (ctx) =>
         //alert("Game over");
         resetTsModal();
         setPause(true);
-        document.getElementsByClassName("game_over")[0].style.display = "block";
+        document.getElementsByClassName("game_over")[0].style.display = "flex";
+        setTimeout(function()
+        {
+            document.getElementsByClassName("game_over")[0].style.opacity = 1;
+        }, 10);
         //location.reload();
     }
 
