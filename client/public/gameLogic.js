@@ -1,4 +1,4 @@
-import { sizeTower, ennemyTowers, addGun, obstacles, tower, guns, ennemies, ennemiesAttacked, addAttack, typeGun, nbParts, cash, addCash, minDelayLaser, maxDelayLaser } from "./game.js";
+import { sizeTower, ennemyTowers, addGun, obstacles, tower, guns, ennemies, ennemiesAttacked, addAttack, typeGun, nbParts, cash, addCash, minDelayLaser, maxDelayLaser, grill } from "./game.js";
 import { convertColRow } from "./utils.js";
 import { gunProperties } from "./properties.js";
 
@@ -236,16 +236,79 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
         }
     });
 
-    /*ennemies.map((ennemy) =>
-    {
-        const posEnnemy = convertColRow(ennemy.x, ennemy.y);
+    ///////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
-        if(posClick.col == posEnnemy.col && posClick.row == posEnnemy.row)
-        {
-            forbidden = true;
-            message = "You can't place gun on enemy !";
-        }
-    });*/
+    let neighboorsTower = 0;
+
+    let posTowerEnnemy = convertColRow(ennemyTowers[0].x, ennemyTowers[0].y);
+
+    if(grill[posTowerEnnemy.row - 1][posTowerEnnemy.col] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTowerEnnemy.row + 1][posTowerEnnemy.col] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTowerEnnemy.row][posTowerEnnemy.col + 1] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTowerEnnemy.row][posTowerEnnemy.col - 1] != 0)
+    {
+        neighboorsTower++;
+    }
+
+    //console.log(neighboorsTower);
+
+    if(neighboorsTower == 3 &&
+        (posClick.col == posTowerEnnemy.col - 1 ||
+         posClick.col == posTowerEnnemy.col + 1 ||
+         posClick.row == posTowerEnnemy.row + 1 ||
+         posClick.row == posTowerEnnemy.row - 1)
+    )
+    {
+        forbidden = true;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+
+    neighboorsTower = 0;
+
+    posTowerEnnemy = convertColRow(ennemyTowers[1].x, ennemyTowers[1].y);
+
+    if(grill[posTowerEnnemy.row - 1][posTowerEnnemy.col] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTowerEnnemy.row + 1][posTowerEnnemy.col] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTowerEnnemy.row][posTowerEnnemy.col + 1] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTowerEnnemy.row][posTowerEnnemy.col - 1] != 0)
+    {
+        neighboorsTower++;
+    }
+
+    //console.log(neighboorsTower);
+
+    if(neighboorsTower == 3 &&
+        (posClick.col == posTowerEnnemy.col - 1 ||
+         posClick.col == posTowerEnnemy.col + 1 ||
+         posClick.row == posTowerEnnemy.row + 1 ||
+         posClick.row == posTowerEnnemy.row - 1)
+    )
+    {
+        forbidden = true;
+    }
+
+    ///////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     if(posClick.col == posTower.col && posClick.row == posTower.row)
     {
@@ -316,6 +379,7 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
     }
 
     else
+    if(message != "")
     {
         document.getElementById("snackbar").style.opacity = "1";
         document.getElementById("snackbar").innerText = message;
