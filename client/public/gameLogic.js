@@ -308,6 +308,39 @@ document.getElementById("gameCanvas").addEventListener("click", (e) =>
     }
 
     ///////////////////////////////////////////////////////////////////
+
+    neighboorsTower = 0;
+
+    if(grill[posTower.row - 1][posTower.col] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTower.row + 1][posTower.col] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTower.row][posTower.col + 1] != 0)
+    {
+        neighboorsTower++;
+    }
+    if(grill[posTower.row][posTower.col - 1] != 0)
+    {
+        neighboorsTower++;
+    }
+
+    //console.log(neighboorsTower);
+
+    if(neighboorsTower == 3 &&
+        (posClick.col == posTower.col - 1 ||
+         posClick.col == posTower.col + 1 ||
+         posClick.row == posTower.row + 1 ||
+         posClick.row == posTower.row - 1)
+    )
+    {
+        forbidden = true;
+    }
+
+    ///////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////
 
     if(posClick.col == posTower.col && posClick.row == posTower.row)
